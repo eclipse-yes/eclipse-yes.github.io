@@ -1,0 +1,346 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#455-assign-cookies">455. Assign Cookies</a></li>
+<li><a href="#135-candy">135. Candy</a></li>
+<li><a href="#435-non-overlapping-intervals">435. Non-overlapping Intervals</a></li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">LeetCode Practice: Greedy</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2021-11-03 / 4 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p align='center'>Intentional practice is the key to success.</p>
+<!-- more -->
+<hr>
+<h1 id="455-assign-cookies">455. Assign Cookies</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/assign-cookies/">https://leetcode-cn.com/problems/assign-cookies/</a><br>
+Description: Given two lists. The first one is the mininum sizes of a cookie that the child will be content with. The second one is the sizes of each cookie.</p>
+</blockquote>
+<pre><code class="language-c++">class Solution {
+public:
+    int findContentChildren(vector&lt;int&gt;&amp; g, vector&lt;int&gt;&amp; s) {
+        std::sort(g.begin(), g.end());
+        std::sort(s.begin(), s.end());
+        int gp = 0, sp = 0;
+        while (gp &lt; g.size() &amp;&amp; sp &lt; s.size()) {
+            if (g[gp] &lt;= s[sp]) {
+                // Mean this quantity of cookie is capable of making this kid content.
+                ++gp;
+            }
+            ++sp;
+        }
+        return gp;
+    }
+};
+</code></pre>
+<h1 id="135-candy">135. Candy</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/candy/">https://leetcode-cn.com/problems/candy/</a><br>
+Description: Given a vector of student scores. Assign them with appropriate candies. There are several rules: 1. each child must have at least 1 candy; 2. children with a higher score get more candies than their neighbors.</p>
+</blockquote>
+<pre><code class="language-c++">class Solution {
+public:
+    int candy(vector&lt;int&gt;&amp; ratings) {
+        int size = ratings.size();
+        if (size &lt; 2) return size;
+        std::vector&lt;int&gt; candies(size, 1);
+
+        // Loop1 from 1 -&gt; size-1.
+        // If the right is greater than the left, candies[right] = candies[left] + 1.
+        for (int i = 1; i &lt; size; ++i) {
+            if (ratings[i-1] &lt; ratings[i]) candies[i] = candies[i-1] + 1;
+        }
+        // Loop2 from size-2 -&gt; 0.
+        // If the left is greater than the right,
+        //      if candies[i] &lt;= candies[i+1], candies[i] = candies[i+1] + 1
+        for (int i = size-2; i &gt;= 0; --i) {
+            if (ratings[i] &gt; ratings[i+1])
+                if (candies[i] &lt;= candies[i+1])
+                    candies[i] = candies[i+1] + 1;
+        }
+
+        return std::accumulate(candies.begin(), candies.end(), 0);
+    }
+};
+</code></pre>
+<p>Besides, there are another solution for loop2 through std function.</p>
+<pre><code class="language-c++">for (int i = size-2; i &gt;= 0; --i)
+  if (ratings[i] &gt; ratings[i+1])
+    candies[i] = std::max(candies[i], candies[i+1]+1);
+</code></pre>
+<h1 id="435-non-overlapping-intervals">435. Non-overlapping Intervals</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/non-overlapping-intervals/">https://leetcode-cn.com/problems/non-overlapping-intervals/</a><br>
+Description: Given a vector contains 2-dimensional vectors which have [1]:start and [2]:end. Return the minimum number of intervals removed to make the rest of the intervals non-overlapping.</p>
+</blockquote>
+<pre><code class="language-c++">class Solution {
+public:
+    int eraseOverlapIntervals(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {
+        if (intervals.empty()) return 0;
+        int size = intervals.size();
+        // Sort intervals according to the end(i).
+        std::sort(intervals.begin(), intervals.end(), [](vector&lt;int&gt;&amp; a, vector&lt;int&gt;&amp; b){
+            return a[1] &lt; b[1];
+        });
+
+        int removed = 0, prev = intervals[0][1];
+        for (int i = 1; i &lt; size; ++i) {
+            if (prev &gt; intervals[i][0])
+                ++removed;
+            else
+                prev = intervals[i][1];
+        }
+        return removed;
+    }
+};
+</code></pre>
+<p>The lambda function in the solution can also be accurated as follows:</p>
+<pre><code class="language-c++">// Considered a special case: when a[i] == b[i], make the smaller one in position [0] to the front.
+return (a[1] &lt; b[1]) | (a[1] == b[1] &amp;&amp; a[0] &lt; b[0]);
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/6HdDBrZRQ/">
+            <span class="flex-auto">Algorithms</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/a0NaW1Q9e/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  Fix &#34;UnicodeEncodeError&#34; When Running gef on Ubuntu20.04
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/xdySGFEUX/">
+                <h3 class="post-title">
+                  Qt Environment on macOS
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

@@ -1,0 +1,887 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#definition">Definition</a></li>
+<li><a href="#404-sum-of-left-leaves">404. Sum of Left Leaves</a></li>
+<li><a href="#655-print-binary-tree">655. Print Binary Tree</a></li>
+<li><a href="#637-average-of-levels-in-binary-tree">637. Average of Levels in Binary Tree</a></li>
+<li><a href="#617-merge-two-binary-trees">617. Merge Two Binary Trees</a></li>
+<li><a href="#606-construct-string-from-binary-tree">606. Construct String from Binary Tree</a></li>
+<li><a href="#112-path-sum">112. Path Sum</a></li>
+<li><a href="#113-path-sum-ii">113. Path Sum II</a></li>
+<li><a href="#100-same-tree">100. Same Tree</a></li>
+<li><a href="#110-balanced-binary-tree">110. Balanced Binary Tree</a></li>
+<li><a href="#102-binary-tree-level-order-traversal">102. Binary Tree Level Order Traversal</a></li>
+<li><a href="#671-second-minimum-node-in-a-binary-tree">671. Second Minimum Node In a Binary Tree</a></li>
+<li><a href="#669-trim-a-binary-search-tree">669. Trim a Binary Search Tree</a></li>
+<li><a href="#654-maximum-binary-tree">654. Maximum Binary Tree</a></li>
+<li><a href="#145-binary-tree-postorder-traversal">145. Binary Tree Postorder Traversal</a></li>
+<li><a href="#295-find-median-from-data-stream">295. Find Median from Data Stream</a></li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">LeetCode Practice: Tree (Part 1)</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2021-09-24 / 19 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p align='center'>Intentional practicing is of great importance.</p>
+<!-- more -->
+<hr>
+<h1 id="definition">Definition</h1>
+<pre><code class="language-c++">struct TreeNode {
+     int val;
+     TreeNode *left;
+     TreeNode *right;
+     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+</code></pre>
+<h1 id="404-sum-of-left-leaves">404. Sum of Left Leaves</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/sum-of-left-leaves/">https://leetcode-cn.com/problems/sum-of-left-leaves/</a><br>
+Description: Given the <code>root</code> of a binary tree, return the sum of all left leaves.</p>
+</blockquote>
+<pre><code class="language-c++"># Author: eclipse
+class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root) {
+        int sum = 0;
+        if (!root) return 0;
+        if (root-&gt;left &amp;&amp; !root-&gt;left-&gt;left &amp;&amp; !root-&gt;left-&gt;right) sum = root-&gt;left-&gt;val;
+        return sum + sumOfLeftLeaves(root-&gt;left) + sumOfLeftLeaves(root-&gt;right);
+    }
+};
+</code></pre>
+<h1 id="655-print-binary-tree">655. Print Binary Tree</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/print-binary-tree/">https://leetcode-cn.com/problems/print-binary-tree/</a><br>
+Description: Given the root of a binary tree, construct a 0-indexed m x n string matrix res that represents a formatted layout of the tree, a matrix layout. The matrix's row number is <code>height+1</code>, while its column number is <code>2^height-1</code>.</p>
+</blockquote>
+<pre><code class="language-c++"># Author: eclipse
+class Solution {
+public:
+    vector&lt;vector&lt;string&gt;&gt; printTree(TreeNode* root) {
+        int h = getHeight(root);
+        int w = (1 &lt;&lt; h) - 1;
+        vector&lt;vector&lt;string&gt;&gt; res(h, vector&lt;string&gt;(w, &quot;&quot;));
+        fillVec(root, res, 0, 0, w-1);
+        return res;
+    }
+private:
+    int getHeight(TreeNode* root) {
+        if (!root) return 0;
+        return max(getHeight(root-&gt;left), getHeight(root-&gt;right)) + 1;
+    }
+    void fillVec(TreeNode *root, vector&lt;vector&lt;string&gt;&gt; &amp;res, int h, int l, int r) {
+        if (!root) return;
+        int mid = (l + r) / 2;
+        res[h][mid] = std::to_string(root-&gt;val);
+        fillVec(root-&gt;left, res, h+1, l, mid-1);
+        fillVec(root-&gt;right, res, h+1, mid+1, r);
+    }
+};
+</code></pre>
+<h1 id="637-average-of-levels-in-binary-tree">637. Average of Levels in Binary Tree</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/average-of-levels-in-binary-tree/">https://leetcode-cn.com/problems/average-of-levels-in-binary-tree/</a><br>
+Description: Given the root of a binary tree, return the average value of the nodes on each level in the form of an array.</p>
+</blockquote>
+<p>Solv1: DFS</p>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;double&gt; averageOfLevels(TreeNode* root) {
+        if (root == nullptr) return {};
+	      vector&lt;double&gt; ans;
+        vector&lt;pair&lt;long long, int&gt;&gt; sum_count;
+      
+        // Count each level's sum of values.
+        preOrder(root, 0, sum_count);       
+        // When sum_count is all set.
+        for (const auto&amp; p : sum_count)
+            ans.push_back(static_cast&lt;double&gt;(p.first) / p.second);
+        return ans;
+    }
+private:
+    void preOrder(TreeNode* root, int depth, vector&lt;pair&lt;long long, int&gt;&gt;&amp; sum_count) {
+        if (root == nullptr) return;
+        if (depth &gt;= sum_count.size()) sum_count.push_back({0,0});
+        sum_count[depth].first += root-&gt;val;
+        sum_count[depth].second++;
+        preOrder(root-&gt;left, depth+1, sum_count);
+        preOrder(root-&gt;right, depth+1, sum_count);
+    }
+};
+</code></pre>
+<p>Solv2: BFS</p>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;double&gt; averageOfLevels(TreeNode* root) {
+        if (root == nullptr) return {};
+        vector&lt;double&gt; ans;
+        vector&lt;TreeNode*&gt; curr, next;
+        curr.push_back(root);
+        
+        // Process every level's nodes one by one.
+        while (!curr.empty()) {
+            long long sum = 0;
+            for (const auto&amp; node : curr) {
+                sum += node-&gt;val;
+                if (node-&gt;left) next.push_back(node-&gt;left);
+                if (node-&gt;right) next.push_back(node-&gt;right);
+            }
+            ans.push_back(static_cast&lt;double&gt;(sum) / curr.size());
+            next.swap(curr);
+            next.clear();
+        }       
+        return ans;
+    }
+};
+</code></pre>
+<h1 id="617-merge-two-binary-trees">617. Merge Two Binary Trees</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/merge-two-binary-trees/">https://leetcode-cn.com/problems/merge-two-binary-trees/</a><br>
+Description: Given two binary trees <code>root1 root2</code>. Merge them together with requirements like: if overlapping, sum two nodes; Otherwise, the not null node will be used as the node of the new tree.</p>
+</blockquote>
+<p>Solv1: modifying the original trees is not allowed</p>
+<pre><code class="language-c++">class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        if (root1 == nullptr) return root2;
+        if (root2 == nullptr) return root1;
+        
+        auto root = new TreeNode(root1-&gt;val + root2-&gt;val);
+        root-&gt;left = mergeTrees(root1-&gt;left, root2-&gt;left);
+        root-&gt;right = mergeTrees(root1-&gt;right, root2-&gt;right);
+      
+        return root;
+    }
+};
+</code></pre>
+<p>Solv2: modifying the original trees is allowed</p>
+<pre><code class="language-c++">class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        if (root1 == nullptr) return root2;
+        if (root2 == nullptr) return root1;
+
+        auto root = root1;
+        root-&gt;val += root2-&gt;val;
+        root-&gt;left = mergeTrees(root1-&gt;left, root2-&gt;left);
+        root-&gt;right = mergeTrees(root1-&gt;right, root2-&gt;right);
+      
+        return root;
+    }
+};
+</code></pre>
+<h1 id="606-construct-string-from-binary-tree">606. Construct String from Binary Tree</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/construct-string-from-binary-tree/">https://leetcode-cn.com/problems/construct-string-from-binary-tree/</a><br>
+Description: Given the root of a binary tree, construct a string consists of parenthesis and integers from a binary tree with the preorder traversing way, and return it. Omit all the empty parenthesis pairs that do not affect the one-to-one mapping relationship between the string and the original binary tree.</p>
+</blockquote>
+<pre><code class="language-c++">class Solution {
+public:
+    string tree2str(TreeNode* root) {
+        if (root == nullptr) return &quot;&quot;;
+        const string s = std::to_string(root-&gt;val);
+        const string l = tree2str(root-&gt;left);
+        const string r = tree2str(root-&gt;right);
+        // Special case 0: s()() -&gt; s
+        if (root-&gt;left == nullptr &amp;&amp; root-&gt;right == nullptr) return s;
+        // Special case 1: s(l)() -&gt; s(l)
+        if (root-&gt;right == nullptr) return s + &quot;(&quot; + l + &quot;)&quot;;
+        // General case: s(l)(r)
+        return s + &quot;(&quot; + l + &quot;)&quot; + &quot;(&quot; + r + &quot;)&quot;;
+    }
+};
+</code></pre>
+<h1 id="112-path-sum">112. Path Sum</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/path-sum/">https://leetcode-cn.com/problems/path-sum/</a><br>
+Description: Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.</p>
+</blockquote>
+<pre><code class="language-c++">class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if (root == nullptr) return false;
+        if (root-&gt;left == nullptr &amp;&amp; root-&gt;right == nullptr)
+            return root-&gt;val == targetSum;
+        int new_targetSum = targetSum - root-&gt;val;
+        return hasPathSum(root-&gt;left, new_targetSum) || hasPathSum(root-&gt;right, new_targetSum);
+    }
+};
+</code></pre>
+<h1 id="113-path-sum-ii">113. Path Sum II</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/path-sum-ii/">https://leetcode-cn.com/problems/path-sum-ii/</a><br>
+Description: Given the root of a binary tree and an integer targetSum, return all root-to-leaf paths where the sum of the node values in the path equals targetSum. Each path should be returned as a list of the node values, not node references. A root-to-leaf path is a path starting from the root and ending at any leaf node.</p>
+</blockquote>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; pathSum(TreeNode* root, int targetSum) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        vector&lt;int&gt; curr;
+        pathSum(root, targetSum, curr, ans);
+        return ans;
+    }
+private:
+    void pathSum(TreeNode* root, int targetSum, vector&lt;int&gt;&amp; curr, vector&lt;vector&lt;int&gt;&gt;&amp; ans) {
+        if (root == nullptr) return;
+        if (root-&gt;left == nullptr &amp;&amp; root-&gt;right == nullptr) {
+            if (root-&gt;val == targetSum) {
+                ans.push_back(curr);
+                ans.back().push_back(root-&gt;val);
+            }
+            return;
+        }
+        
+        curr.push_back(root-&gt;val);
+        int newTargetSum = targetSum - root-&gt;val;
+        pathSum(root-&gt;left, newTargetSum, curr, ans);
+        pathSum(root-&gt;right, newTargetSum, curr, ans);
+        curr.pop_back();
+    }
+};
+</code></pre>
+<h1 id="100-same-tree">100. Same Tree</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/same-tree/">https://leetcode-cn.com/problems/same-tree/</a><br>
+Description: Given the roots of two binary trees p and q, write a function to check if they are the same or not. Both structurally and node's value-side identical.</p>
+</blockquote>
+<pre><code class="language-c++">class Solution {
+public:
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        // Case 0: p and q are all empty.
+        if (p == nullptr &amp;&amp; q == nullptr) return true;
+        // Case 1: p and q are not all empty.
+        if (p == nullptr || q == nullptr) return false;
+        // Case 2: p and q are not empty but values are not the same.
+        if (p-&gt;val != q-&gt;val) return false;
+        // Recursively compare left-subtree and right-subtree.
+        return isSameTree(p-&gt;left, q-&gt;left) &amp;&amp; isSameTree(p-&gt;right, q-&gt;right);
+    }
+};
+</code></pre>
+<h1 id="110-balanced-binary-tree">110. Balanced Binary Tree</h1>
+<blockquote>
+<p>Url: <a href="https://leetcode-cn.com/problems/balanced-binary-tree/">https://leetcode-cn.com/problems/balanced-binary-tree/</a><br>
+Description: Given a binary tree, determine if it is height-balanced.</p>
+</blockquote>
+<p>The definition of <code>Height-Balanced</code>:<br>
+A binary tree in which the left and right subtrees of every node differ in height by no more than 1.</p>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210925130606.png" alt="image-20210925130606965" loading="lazy"></figure>
+<p>Solv1: recursively check isBalanced and calculate height. O(nlogn)</p>
+<pre><code class="language-c++">class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        if (root == nullptr) return true;
+        int leftHeight = getHeight(root-&gt;left);
+        int rightHeight = getHeight(root-&gt;right);
+        return (abs(leftHeight - rightHeight)&lt;=1) &amp;&amp; isBalanced(root-&gt;left) &amp;&amp; isBalanced(root-&gt;right);
+    }
+private:
+    int getHeight(TreeNode* root) {
+        if (root == nullptr) return 0;
+        return max(getHeight(root-&gt;left), getHeight(root-&gt;right)) + 1;
+    }
+};
+</code></pre>
+<p>Solv2: recursively calculate height as well as checking isBalanced. O(n)</p>
+<pre><code class="language-c++">class Solution {
+public:
+    bool isBalanced(TreeNode* root) {
+        if (root == nullptr) return true;
+        bool balanced = true;
+        check(root, balanced);
+        return balanced;
+    }
+private:
+    int check(TreeNode* root, bool&amp; balanced) {
+        if (root == nullptr) return 0;
+        int leftHeight = check(root-&gt;left, balanced);
+        int rightHeight = check(root-&gt;right, balanced);
+        if (abs(leftHeight - rightHeight) &gt; 1) {
+            balanced = false;
+            return -1;
+        }
+        return max(leftHeight, rightHeight) + 1;
+    }
+};
+</code></pre>
+<h1 id="102-binary-tree-level-order-traversal">102. Binary Tree Level Order Traversal</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/">https://leetcode-cn.com/problems/binary-tree-level-order-traversal/</a><br>
+Description: Given the root of a binary tree, return the level order traversal of its nodes' values.</p>
+</blockquote>
+<figure data-type="image" tabindex="2"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210926223624.png" alt="image-20210926223624188" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+        return BFS(root);
+    }
+private:
+    vector&lt;vector&lt;int&gt;&gt; BFS(TreeNode* root) {
+        if (root == nullptr) return {};
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        vector&lt;TreeNode*&gt; curr, next;
+        curr.push_back(root);
+        while (!curr.empty()) {
+            ans.push_back({});
+            for (const auto node : curr) {
+                ans.back().push_back(node-&gt;val);
+                if (node-&gt;left) next.push_back(node-&gt;left);
+                if (node-&gt;right) next.push_back(node-&gt;right);
+            }
+            next.swap(curr);
+            next.clear();
+        }
+        return ans;
+    }
+};
+</code></pre>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; levelOrder(TreeNode* root) {
+        vector&lt;vector&lt;int&gt;&gt; ans;
+        DFS(root, 0, ans);
+        return ans;
+    }
+private:
+    void DFS(TreeNode* root, int depth, vector&lt;vector&lt;int&gt;&gt;&amp; ans) {
+        if (root == nullptr) return;
+      	// Suitable for pre/in/post order traversal.
+        while (ans.size() &lt;= depth) ans.push_back({});
+        DFS(root-&gt;left, depth+1, ans);
+        DFS(root-&gt;right, depth+1, ans);
+        ans.at(depth).push_back(root-&gt;val);
+    }
+};
+</code></pre>
+<h1 id="671-second-minimum-node-in-a-binary-tree">671. Second Minimum Node In a Binary Tree</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/second-minimum-node-in-a-binary-tree/">https://leetcode-cn.com/problems/second-minimum-node-in-a-binary-tree/</a></p>
+<p>Description: Given such a special binary tree, output the second minimum value in the set made of all the nodes' value in the whole tree. If no such second minimum value exists, output -1 instead.</p>
+<p><strong>Constraints:</strong></p>
+<pre><code>  1. non-empty special binary tree consisting of nodes with the non-negative value;
+  	2. each node has 2 or 0 sub-node
+  	3. root.val = min(root.left.val, root.right.val)
+  	4. The number of nodes in the tree is in the range [1, 25]
+  	5. 1 &lt;= Node.val &lt;= 231 - 1
+</code></pre>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210926232447.png" alt="image-20210926232447747" loading="lazy"></figure>
+<p>For the solution of BFS, the first time I use <code>int s2 =INT_MAX</code> to set s2, but one cause failed as submitting. The reason is that the biggest value available for node <code>2^31-1</code>. The suitable initial value of s2 is <strong>INT32_MAX</strong>. Therefore, change to <code>long long s2 = INT32_MAX</code> and everything is all right.</p>
+<pre><code class="language-c++">class Solution {
+public:
+    int findSecondMinimumValue(TreeNode* root) {
+        if (root == nullptr) return -1;
+        return BFS(root);
+    }
+private:
+    int BFS(TreeNode* root) {
+        if (root == nullptr) return -1;
+        // Smallest value;
+        int s1 = root-&gt;val;
+        // Second small value;
+        long long s2 = INT32_MAX;
+        bool found = false;
+        deque&lt;TreeNode*&gt; q;
+        q.push_back(root);
+        
+        while (!q.empty()) {
+            TreeNode* node = q.front();
+            q.pop_front();
+            // Keep update the second small value.
+            if (node-&gt;val &gt; s1 &amp;&amp; node-&gt;val &lt;= s2) {
+                // If found a second small value under this queue,
+                // no need to add this node's children.
+                s2 = node-&gt;val;
+                found = true;
+                continue;
+            }
+            
+            // If the second small value does not appear,
+            // keep adding this node's children into queue.
+            if (node-&gt;left == nullptr) continue;
+            q.push_back(node-&gt;left);
+            q.push_back(node-&gt;right);
+        }
+        
+        return found ? s2 : -1;
+    }
+};
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210926232626.png" alt="image-20210926232626158" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    int findSecondMinimumValue(TreeNode* root) {
+        if (root == nullptr) return -1;
+        return DFS(root, root-&gt;val);
+    }
+private:
+    // s1 is the current smallest value.
+    int DFS(TreeNode* root, int s1) {
+        if (root == nullptr) return -1;
+        
+        // If root's value is already greater than s1,
+        // thus root's value is the second smallest one.
+        if (root-&gt;val &gt; s1) return root-&gt;val;
+        // Otherwise, recursively seek root's children
+        // and check the smaller one.
+        int sl = DFS(root-&gt;left, s1);
+        int sr = DFS(root-&gt;right, s1);
+        if (sl == -1) return sr;
+        if (sr == -1) return sl;
+        return min(sl, sr);
+    }
+};
+</code></pre>
+<h1 id="669-trim-a-binary-search-tree">669. Trim a Binary Search Tree</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/trim-a-binary-search-tree/">https://leetcode-cn.com/problems/trim-a-binary-search-tree/</a><br>
+Description: Given the root of a binary search tree and the lowest and highest boundaries as low and high, trim the tree so that all its elements lies in [low, high]. Trimming the tree should not change the relative structure of the elements that will remain in the tree (i.e., any node's descendant should remain a descendant). It can be proven that there is a unique answer. Return the root of the trimmed binary search tree. Note that the root may change depending on the given bounds.</p>
+</blockquote>
+<figure data-type="image" tabindex="5"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210927231550.png" alt="image-20210927231550953" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    // No cleanup means memory leak.
+    TreeNode* trimBST(TreeNode* root, int low, int high) {
+        if (root == nullptr) return nullptr;
+        // If val not in range, return the left/right subtrees.
+        if (root-&gt;val &lt; low) return trimBST(root-&gt;right, low, high);
+        if (root-&gt;val &gt; high) return trimBST(root-&gt;left, low , high);
+        // If val in [low, high], recursively trim left/right subtrees.
+        root-&gt;left = trimBST(root-&gt;left, low, high);
+        root-&gt;right = trimBST(root-&gt;right, low, high);
+        return root;
+    }
+};
+</code></pre>
+<h1 id="654-maximum-binary-tree">654. Maximum Binary Tree</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/maximum-binary-tree/">https://leetcode-cn.com/problems/maximum-binary-tree/</a><br>
+Description: You are given an integer array nums with no duplicates. Return a maximum binary tree built recursively from nums.</p>
+<p>Algorithm:</p>
+<ol>
+<li>Create a root node whose value is the maximum value in nums.</li>
+<li>Recursively build the left subtree on the subarray prefix to the left of the maximum value.</li>
+<li>Recursively build the right subtree on the subarray suffix to the right of the maximum value.</li>
+</ol>
+</blockquote>
+<figure data-type="image" tabindex="6"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210927225119.png" alt="image-20210927225119636" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector&lt;int&gt;&amp; nums) {
+        if (nums.empty()) return nullptr;
+        // Find the max element in nums -&gt; O(n)
+        auto it = std::max_element(nums.begin(), nums.end());
+        TreeNode* root = new TreeNode(*it);
+        vector&lt;int&gt; left(nums.begin(), it);
+        vector&lt;int&gt; right(it+1, nums.end());
+        root-&gt;left = constructMaximumBinaryTree(left);
+        root-&gt;right = constructMaximumBinaryTree(right);
+        return root;
+    }
+};
+</code></pre>
+<p>The solution above copyies two vectors in each recursion. One way to improve is to use reference instead of copying.</p>
+<pre><code class="language-c++">class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector&lt;int&gt;&amp; nums) {
+        return makeMBT(nums, 0, nums.size());
+    }
+private:
+    TreeNode* makeMBT(const vector&lt;int&gt;&amp; nums, int begin, int end) {
+        if (begin &gt;= end) return nullptr;
+        auto it = std::max_element(nums.begin()+begin, nums.begin()+end);
+        TreeNode* root = new TreeNode(*it);
+        int index = it - nums.begin();
+        root-&gt;left = makeMBT(nums, begin, index);
+        root-&gt;right = makeMBT(nums, index+1, end);
+        return root;
+    }
+};
+</code></pre>
+<h1 id="145-binary-tree-postorder-traversal">145. Binary Tree Postorder Traversal</h1>
+<blockquote>
+<p>URL: <a href="https://leetcode-cn.com/problems/binary-tree-postorder-traversal/">https://leetcode-cn.com/problems/binary-tree-postorder-traversal/</a><br>
+Description: Given the root of a binary tree, return the postorder traversal of its nodes' values.</p>
+</blockquote>
+<p>(1) Recursive Solution:</p>
+<figure data-type="image" tabindex="7"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210928103307.png" alt="img" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) {
+        vector&lt;int&gt; ans;
+        postorderTraversal(root, ans);
+        return ans;
+    }
+private:
+    void postorderTraversal(TreeNode* root, vector&lt;int&gt;&amp; ans) {
+        if (root == nullptr) return;
+        postorderTraversal(root-&gt;left, ans);
+        postorderTraversal(root-&gt;right, ans);
+        ans.push_back(root-&gt;val);
+    }
+};
+</code></pre>
+<p>(2) Iterative Solution:</p>
+<figure data-type="image" tabindex="8"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210928103338.png" alt="img" loading="lazy"></figure>
+<pre><code class="language-c++">class Solution {
+public:
+    vector&lt;int&gt; postorderTraversal(TreeNode* root) {
+        if (root == nullptr) return {};
+        deque&lt;int&gt; ans;
+        stack&lt;TreeNode*&gt; s;
+        s.push(root);
+        while (!s.empty()) {
+            TreeNode* n = s.top();
+            s.pop();
+            // reverse(print(root), traverse(root-&gt;right), traverse(root-&gt;left))
+            ans.push_front(n-&gt;val);
+            if (n-&gt;left != nullptr) s.push(n-&gt;left);
+            if (n-&gt;right != nullptr) s.push(n-&gt;right);
+        }
+        return vector&lt;int&gt;(ans.begin(), ans.end());
+    }
+};
+</code></pre>
+<h1 id="295-find-median-from-data-stream">295. Find Median from Data Stream</h1>
+<blockquote>
+<p>URL: https://leetcode-cn.com/problems/find-median-from-data-stream/<br>
+Description: Comprehension of median. Then, implement the MedianFinder class.</p>
+<p>Requirements:</p>
+<ul>
+<li>MedianFinder() initializes the MedianFinder object.</li>
+<li>void addNum(int num) adds the integer num from the data stream to the data structure.</li>
+<li>double findMedian() returns the median of all elements so far.</li>
+</ul>
+<p>Constraints:</p>
+<ul>
+<li>-10^5 &lt;= num &lt;= 10^5</li>
+<li>There will be at least one element in the data structure before calling findMedian.</li>
+<li>At most 5 * 10^4 calls will be made to addNum and findMedian.</li>
+</ul>
+</blockquote>
+<p>The first solution: brute force (not accepted)</p>
+<figure data-type="image" tabindex="9"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20211004003720.png" alt="img" loading="lazy"></figure>
+<p>The second solution: <strong><u><em>two heap</em></u></strong> (little tricky)</p>
+<figure data-type="image" tabindex="10"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20211004003908.png" alt="img" loading="lazy"></figure>
+<pre><code class="language-c++">class MedianFinder {
+public:
+    MedianFinder() {}
+
+    // Constraints:
+    // 1. l_.size() &gt;= r_.size()
+    // 2. l_.size() - r_.size() &lt;= 1
+    void addNum(int num) {
+        // Step 1: Add a num into max-heap or min-heap.
+        if (l_.empty() || num &lt;= l_.top()) {
+            l_.push(num);
+        } else {
+            r_.push(num);
+        }
+
+        // Step 2: Balance max-heap and min-heap.
+        if (l_.size() &lt; r_.size()) {
+            l_.push(r_.top());
+            r_.pop();
+        } else if (l_.size() - r_.size() == 2) {
+            r_.push(l_.top());
+            l_.pop();
+        }
+    }
+
+    double findMedian() {
+        if (l_.size() &gt; r_.size()) {
+            return static_cast&lt;double&gt;(l_.top());
+        } else {
+            return (static_cast&lt;double&gt;(l_.top())+static_cast&lt;double&gt;(r_.top())) / 2;
+        }
+    }
+private:
+    priority_queue&lt;int, vector&lt;int&gt;, less&lt;int&gt;&gt; l_; // max-heap
+    priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; r_; // min-heap
+};
+</code></pre>
+<p>The third solution: <strong><u><em>balanced binary tree</em></u></strong></p>
+<figure data-type="image" tabindex="11"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20211004003929.png" alt="img" loading="lazy"></figure>
+<pre><code class="language-c++">class MedianFinder {
+public:
+    MedianFinder() {}
+
+    void addNum(int num) {
+        if (m_.empty()) {
+            l_ = r_ = m_.insert(num);
+            return;
+        }
+        
+        m_.insert(num);
+        const size_t n = m_.size();
+        
+        if (n &amp; 1) {
+            if (num &gt;= *r_) {
+                l_ = r_;
+            } else {
+                l_ = --r_;
+            }
+        } else {
+            if (num &gt;= *r_)
+                ++r_;
+            else
+                --l_;
+        }
+    }
+
+    double findMedian() {
+        return (static_cast&lt;double&gt;(*l_) + *r_) / 2;
+    }
+private:
+    multiset&lt;int&gt; m_;
+    multiset&lt;int&gt;::const_iterator l_;
+    multiset&lt;int&gt;::const_iterator r_;
+};
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/6HdDBrZRQ/">
+            <span class="flex-auto">Algorithms</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/NquhcdoLu/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  Manage Python Virtual Environment
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/1Fyux24SY/">
+                <h3 class="post-title">
+                  Lecture Notes: Linear Algebra
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

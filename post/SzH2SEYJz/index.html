@@ -1,0 +1,358 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#setting-up">Setting Up</a></li>
+<li><a href="#1-set-up-apt-sources-mirroring">1. Set up Apt Sources Mirroring</a></li>
+<li><a href="#3-neovim-with-spacevim-and-sublime">3. Neovim with Spacevim and Sublime</a></li>
+<li><a href="#4-dependent-library-32bit">4. Dependent Library: 32bit</a></li>
+<li><a href="#5-zsh-with-oh-my-zsh">5. ZSH with Oh-My-Zsh</a></li>
+<li><a href="#6-pwntools">6. Pwntools</a></li>
+<li><a href="#7-pwndbg-peda-gef">7. Pwndbg Peda Gef</a>
+<ul>
+<li><a href="#71-pwndbg">7.1 pwndbg</a></li>
+<li><a href="#72-peda">7.2 Peda</a></li>
+<li><a href="#73-gef">7.3 Gef</a></li>
+</ul>
+</li>
+<li><a href="#8-one_gadget">8. one_gadget</a></li>
+<li><a href="#9-libc-tools">9. Libc Tools</a></li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Ubuntu-Based Environment for PWN</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2021-09-15 / 3 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>There are several choices for implementing ctf environment for PWN. For example, docker containers or virtual machines including Ubuntu 16 18 20, Kali Linux and so on.</p>
+<!-- more -->
+<h1 id="setting-up">Setting Up</h1>
+<ol>
+<li>Apt: Tsinghua Mirror</li>
+<li>Script Language: Python3 with pip</li>
+<li>Editor: Neovim with SpaceVim, Sublime</li>
+<li>Dependent Library: 32bit 64bit</li>
+<li>Shell: zsh with oh-my-zsh</li>
+<li>Toolset: pwntools</li>
+<li>GDB: pwndbg peda gef</li>
+<li>Gadget: ROPgadget Onegadget</li>
+<li>LibcSearcher</li>
+<li>Hardware Virtualization: qemu</li>
+<li>Multiple Architecture Debugger: gdb-multiarch</li>
+</ol>
+<h1 id="1-set-up-apt-sources-mirroring">1. Set up Apt Sources Mirroring</h1>
+<p>Tsinghua Mirror: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/">https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/</a></p>
+<p>Alibaba Mirror: <a href="https://developer.aliyun.com/mirror/ubuntu/">https://developer.aliyun.com/mirror/ubuntu/</a></p>
+<pre><code class="language-bash">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+sudo vim /etc/apt/sources.list
+</code></pre>
+<h1 id="3-neovim-with-spacevim-and-sublime">3. Neovim with Spacevim and Sublime</h1>
+<pre><code class="language-bash">sudo apt install neovim -y
+</code></pre>
+<pre><code class="language-bash">wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+sudo apt-get install apt-transport-https
+echo &quot;deb https://download.sublimetext.com/ apt/stable/&quot; | sudo tee /etc/apt/sources.list.d/sublime-text.list
+sudo apt-get update
+sudo apt-get install sublime-text
+</code></pre>
+<h1 id="4-dependent-library-32bit">4. Dependent Library: 32bit</h1>
+<pre><code class="language-bash"># 32 bit dependent library
+sudo apt install lib32ncurses6, lib32z1
+</code></pre>
+<h1 id="5-zsh-with-oh-my-zsh">5. ZSH with Oh-My-Zsh</h1>
+<pre><code class="language-bash">sudo apt install git zsh -y
+</code></pre>
+<pre><code class="language-bash">sh -c &quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;
+sh -c &quot;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&quot;
+</code></pre>
+<p>Recommended Plugins for oh-my-zsh:</p>
+<ul>
+<li><a href="https://github.com/zsh-users/zsh-autosuggestions">zsh-autosuggestions</a></li>
+<li><a href="https://github.com/zsh-users/zsh-syntax-highlighting">zsh-syntax-highlighting</a></li>
+</ul>
+<h1 id="6-pwntools">6. Pwntools</h1>
+<pre><code class="language-bash">sudo apt install python3 python3-pip python3-dev
+sudo pip install --upgrade pip
+sudo pip install --upgrade pwntools
+</code></pre>
+<h1 id="7-pwndbg-peda-gef">7. Pwndbg Peda Gef</h1>
+<h2 id="71-pwndbg">7.1 pwndbg</h2>
+<p>Github Repo Address: <a href="https://github.com/pwndbg/pwndbg/">https://github.com/pwndbg/pwndbg/</a></p>
+<pre><code class="language-bash">git clone https://github.com/pwndbg/pwndbg
+cd pwndbg
+./setup.sh
+</code></pre>
+<h2 id="72-peda">7.2 Peda</h2>
+<p>Github Repo Address: <a href="https://github.com/longld/peda/">https://github.com/longld/peda/</a></p>
+<pre><code class="language-bash">git clone https://github.com/longld/peda.git ~/peda
+echo &quot;source ~/peda/peda.py&quot; &gt;&gt; ~/.gdbinit
+echo &quot;DONE! debug your program with gdb and enjoy&quot;
+</code></pre>
+<h2 id="73-gef">7.3 Gef</h2>
+<p>Github Repo Address: <a href="https://github.com/hugsy/gef/">https://github.com/hugsy/gef/</a><br>
+Documentation: <a href="https://gef.readthedocs.io/en/master/">https://gef.readthedocs.io/en/master/</a></p>
+<pre><code class="language-bash"># via the install script
+## using curl
+$ bash -c &quot;$(curl -fsSL http://gef.blah.cat/sh)&quot;
+
+## using wget
+$ bash -c &quot;$(wget http://gef.blah.cat/sh -O -)&quot;
+
+# or manually
+$ wget -O ~/.gdbinit-gef.py -q http://gef.blah.cat/py
+$ echo source ~/.gdbinit-gef.py &gt;&gt; ~/.gdbinit
+
+# or alternatively from inside gdb directly
+$ gdb -q
+(gdb) pi import urllib.request as u, tempfile as t; g=t.NamedTemporaryFile(suffix='-gef.py'); open(g.name, 'wb+').write(u.urlopen('https://tinyurl.com/gef-master').read()); gdb.execute('source %s' % g.name)
+</code></pre>
+<h1 id="8-one_gadget">8. one_gadget</h1>
+<p>Github Repo Address: <a href="https://github.com/david942j/one_gadget/">https://github.com/david942j/one_gadget/</a></p>
+<pre><code class="language-bash">sudo apt install ruby
+sudo gem install one_gadget
+</code></pre>
+<h1 id="9-libc-tools">9. Libc Tools</h1>
+<p>LibcSearcher: <a href="https://github.com/lieanu/LibcSearcher/">https://github.com/lieanu/LibcSearcher/</a><br>
+Online-LibcSearcher: <a href="https://github.com/eclipse-yes/Online-LibcSearcher/">https://github.com/eclipse-yes/Online-LibcSearcher/</a></p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/v6fcRAOlh/">
+            <span class="flex-auto">Pwn</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/2tUZw0V4U/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  Now, Parallels Tools can be Smoothly Installed on Kali 2021.02
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/x8OgZ9olC/">
+                <h3 class="post-title">
+                  Using Pop Shell on Kali Linux
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

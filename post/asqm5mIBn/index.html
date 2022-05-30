@@ -1,0 +1,1829 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#%E6%B1%82%E6%9C%80%E5%A4%A7%E6%94%B6%E7%9B%8A">求最大收益</a></li>
+<li><a href="#%E4%BA%92%E6%96%A5%E5%AD%97%E7%AC%A6%E4%B8%B2">互斥字符串</a></li>
+<li><a href="#linux%E8%B7%AF%E5%BE%84">linux路径</a></li>
+<li><a href="#%E4%BA%8C%E5%85%83%E4%B8%80%E6%AC%A1%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%B1%82%E5%B9%82">二元一次多项式求幂</a></li>
+<li><a href="#%E4%BA%8C%E5%85%83%E4%B8%80%E6%AC%A1%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%9A%84%E5%B9%82%E5%A4%A7%E6%95%B4%E6%95%B0">二元一次多项式的幂（大整数）</a></li>
+<li><a href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC">表达式求值</a></li>
+<li><a href="#%E6%A0%B9%E6%8D%AEnext%E6%95%B0%E7%BB%84%E6%8E%A8%E5%AF%BC%E6%A8%A1%E5%BC%8F%E5%AD%97%E7%AC%A6%E4%B8%B2">根据next数组推导模式字符串</a></li>
+<li><a href="#%E4%B8%89%E5%85%83%E7%BB%84%E8%A1%A8%E7%A4%BA%E7%9A%84%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5%E7%9A%84%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97">三元组表示的稀疏矩阵的乘法运算</a></li>
+<li><a href="#%E6%B1%82%E6%95%B4%E6%95%B0%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%94-%E6%80%A7%E8%83%BD">求整数最大间隔-性能</a></li>
+<li><a href="#%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%85%88%E5%BA%8F%E9%81%8D%E5%8E%86">完全二叉树的先序遍历</a></li>
+<li><a href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86%E5%8F%8A%E4%BA%8C%E5%8F%89%E6%A0%91%E9%AB%98%E5%BA%A6">二叉树遍历及二叉树高度</a></li>
+<li><a href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E4%B8%BA%E5%A0%86-%E5%A0%86%E6%95%B4%E7%90%86">判断是否为堆-堆整理</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BAavl%E6%A0%91%E5%B9%B6%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E4%B8%BA%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91">创建AVL树并判断是否为完全二叉树</a></li>
+<li><a href="#%E6%9D%91%E5%BA%84%E6%98%AF%E5%90%A6%E8%81%94%E9%80%9A">村庄是否联通</a></li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">NKUCS OJ Problems: Data Structure</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2022-03-13 / 42 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="求最大收益">求最大收益</h1>
+<pre><code class="language-Markdown"># 题目描述
+已知某一只股票的每一日收盘价格，假设只可以进行一次先买后卖，求每股最大收益。
+
+输入：
+先输入包含的股票价格数量，然后输入股票价格（大于0的整数）。
+输出：
+最大收益。
+如果是递减，最大收益为0。
+
+# 样例输入输出
+样例1
+输入:
+3
+4 3 2
+输出:
+0
+样例2
+输入:
+5
+9 10 6 9 5
+输出:
+3
+</code></pre>
+<p>Mind Palace: dynamic programming.</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+using std::cout; using std::cin; using std::endl;
+using std::vector;
+
+class Solution {
+public:
+    int getMaxProfit() {
+        int size; cin &gt;&gt; size;
+        if (size &lt; 2) return 0;
+        vector&lt;int&gt; prices = vector&lt;int&gt;(size);
+        for (int i = 0; i &lt; size; ++i)
+            cin &gt;&gt; prices[i];
+        int maxProfit = 0, minPrice = prices[0];
+        for (const auto&amp; price : prices) {
+            if (price &gt; minPrice)
+                maxProfit = std::max(maxProfit, price - minPrice);
+            else
+                minPrice = price;
+        }
+
+        return maxProfit;
+    }
+};
+
+int main() {
+    int res = Solution().getMaxProfit();
+    cout &lt;&lt; res &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+<h1 id="互斥字符串">互斥字符串</h1>
+<pre><code class="language-Markdown"># 题目描述
+给定一个仅含有英文大小写字母的字符串序列 s，若其中任意两个相邻字符都不是同一个字母的大小写形式，则称其为互斥字符串。
+程序需要将给定的字符串转换为互斥字符串。aa为互斥，aA和Aa为非互斥。
+程序的每次操作可以从字符串中选出满足上述条件的两个相邻字符并删除，直到字符串整理好为止。
+注：若最终结果为空字符串，请输出 -1。
+
+要求时间复杂度O(n)
+
+Input Format
+输入由一行字符串组成。测试样例保证答案唯一。
+Output Format
+输出一行，为输入字符串经过若干次删除操作得到的互斥字符串。
+
+Example
+Input
+abBAcCc
+Output
+c
+
+# 说明
+该样例存在多种转换路径，但最终输出相同
+&quot;abBAcCc&quot; --&gt; &quot;aAcCc&quot; --&gt; &quot;cCc&quot; --&gt; &quot;c&quot;
+&quot;abBAcCc&quot; --&gt; &quot;abBAc&quot; --&gt; &quot;aAc&quot; --&gt; &quot;c&quot;
+
+# 样例输入输出
+样例1
+输入:
+abBAcCc
+输出:
+c
+样例2
+输入:
+AaBbCcDd
+输出:
+-1
+</code></pre>
+<p>Mind Palace: single stack.</p>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+using std::cout; using std::cin; using std::endl;
+using std::string; using std::vector;
+
+class Solution {
+public:
+    bool judgeMutex(char c1, char c2) {
+        if (c1 - c2 == 0x20 || c1 - c2 == -0x20) return false;
+        return true;
+    }
+    void run() {
+        string cinStr; cin &gt;&gt; cinStr;
+        vector&lt;char&gt; stk;
+        for (uint i = 0; i &lt; cinStr.size(); ++i) {
+            // If stack is empty, push char.
+            if (stk.empty()) {
+                stk.push_back(cinStr[i]);
+                continue;
+            }
+            // If stack.top() and cinStr[i] is mutexed, pop char.
+            if (!this-&gt;judgeMutex(stk.back(), cinStr[i]))
+                stk.pop_back();
+            // If stack.top() and cinStr[1] is not mutexed, push char.
+            else
+                stk.push_back(cinStr[i]);
+        }
+        if (stk.empty()) {
+            cout &lt;&lt; -1;
+            return;
+        }
+        for (uint i = 0; i &lt; stk.size(); ++i)
+            cout &lt;&lt; stk[i];
+    }
+};
+
+int main() {
+    Solution().run();
+    return 0;
+}
+</code></pre>
+<h1 id="linux路径">linux路径</h1>
+<pre><code class="language-Markdown"># 题目描述
+给定一个非最简的Linux文件绝对路径，将其简化为标准的Linux文件绝对路径。
+在Linux文件路径中，一个英文句号 . 表示当前目录，两个连续的英文句号 .. 表示返回到上一级目录。
+标准的Linux文件绝对路径具有以下特点
+第一个字符为斜杠 /
+两个目录名称直接有且仅有一个斜杠 /
+除根目录外，路径结尾不能为斜杠 /
+不会出现一个英文句号 . 或者两个连续的英文句号 ..
+
+# Input Format
+输入由一行字符串组成，为非最简的Linux文件绝对路径。
+
+# Output Format
+输出一行，为最简化的Linux文件绝对路径。
+
+# Example
+## Input
+/aaa/../../bbb/ccc/..///./..
+## Output
+/
+## 说明
+路径从根目录开始从左往右进行解析
+aaa 表示进入根目录下 aaa 目录
+.. 表示返回上一级目录，即返回根目录
+.. 表示返回上一级目录，但当前目录为根目录，无上一级目录。故仍处于根目录。
+bbb 表示进入根目录下 bbb 目录
+ccc 表示进入 bbb 目录下 ccc 目录
+.. 表示返回上一级目录，即返回 bbb 目录
+后续若干个连续的斜杠 / 间没有目录名称，直接删除
+. 表示当期文件夹，故仍处于 bbb 目录
+.. 表示返回上一级目录，即返回根目录
+根目录用斜杠 / 表示，故输出斜杠 /
+
+# 样例输入输出
+样例1
+输入:
+/aaa/../../bbb/ccc/..///./..
+输出:
+/
+
+样例2
+输入:
+/home/
+输出:
+/home
+</code></pre>
+<p>Mind Palace: split inputted string, single stack.</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+public:
+    static void run() {
+        string cinStr; cin &gt;&gt; cinStr;
+        // 1. Split input string with char '/'
+        stringstream ss(cinStr);
+        char separator = '/';
+        string subString; vector&lt;string&gt; subStrings;
+        while (getline(ss, subString, separator))
+            if (!subString.empty()) subStrings.push_back(subString); // Ignore &quot;&quot; substring.
+
+        // 2. Handle substrings with a stack;
+        //    if substr is '..', pop; if substr is '.', do nothing; if substr is 'dir', push it.
+        vector&lt;string&gt; sta; // Here use a vector to present stack.
+        for (const auto&amp; str : subStrings) {
+            if (str == &quot;..&quot; &amp;&amp; !sta.empty())
+                sta.pop_back();
+            else if (str == &quot;.&quot; || (str == &quot;..&quot; &amp;&amp; sta.empty()))
+                continue;
+            else
+                sta.push_back(str);
+        }
+        // 3. Print out absolute linux address.
+        cout &lt;&lt; &quot;/&quot;;
+        for (auto i = sta.begin(); i != sta.end(); ++i) {
+            cout &lt;&lt; *i;
+            if (i != sta.end() - 1) cout &lt;&lt; &quot;/&quot;;
+        }
+    }
+};
+
+int main() {
+    Solution::run();
+    return 0;
+}
+</code></pre>
+<h1 id="二元一次多项式求幂">二元一次多项式求幂</h1>
+<pre><code class="language-Markdown"># 题目描述
+给定一个常数项为0的二元一次多项式，求该多项式的幂。
+设未知数为x,y，输入为x和y的整数系数a,b以及整数幂n，输出形如以下样式
+求幂运算的结果，按照x的幂降序排列
+
+# Input Format
+输入未知数整数系数 a,b (-100&lt;a,b&lt;100),n (1&lt;n&lt;6)
+# Output Format
+幂运算的结果的多项式，按照x幂降序排列  
+
+# Example
+Input
+ 2 3 2
+Output
+4x^2+12xy+9y^2
+
+# 说明
+幂为1时不输出^1
+系数为1时不输出系数，-1只输出负号。
+
+# 样例输入输出
+样例1
+输入:
+2 3 2
+输出:
+4x^2+12xy+9y^2
+</code></pre>
+<p>Mind Palace: queue.</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+public:
+    static void run() {
+        int a, b, n; cin &gt;&gt; a &gt;&gt; b &gt;&gt; n;
+        queue&lt;long&gt; que;
+        que.push(0); que.push(a); que.push(b);
+        long first = que.front(); que.pop();
+        long second = 0;
+        long tmp = 0;
+        for (int i = 0; i &lt; n - 1; ++i) {
+            que.push(0);
+            for (int j = 0; j &lt; i + 3; ++j) {
+                second = que.front(); que.pop();
+                tmp = first * b + second * a;
+                que.push(tmp);
+                first = second;
+            }
+        }
+
+        int power = n; // Power of x; Power of y is n - power.
+        while (!que.empty()) {
+            // Print sign symbol.
+            if (power != n &amp;&amp; que.front() &gt; 0) cout &lt;&lt; &quot;+&quot;;
+            // Print the coefficient.
+            if (que.front() == 1) {
+                cout &lt;&lt; &quot;&quot;;
+                que.pop();
+            } else if (que.front() == -1) {
+                cout &lt;&lt; &quot;-&quot;;
+                que.pop();
+            } else {
+                cout &lt;&lt; que.front();
+                que.pop();
+            }
+            // Print x and y.
+            if (power != 0) cout &lt;&lt; &quot;x&quot;;
+            if (power &gt;  1) cout &lt;&lt; &quot;^&quot; &lt;&lt; power;
+            if (n - power != 0) cout &lt;&lt; &quot;y&quot;;
+            if (n - power &gt;  1) cout &lt;&lt; &quot;^&quot; &lt;&lt; n - power;
+            power--;
+        }
+
+    }
+};
+
+int main() {
+    Solution::run();
+    return 0;
+}
+</code></pre>
+<h1 id="二元一次多项式的幂大整数">二元一次多项式的幂（大整数）</h1>
+<pre><code class="language-Markdown"># 题目描述
+给定一个常数项为0的二元一次多项式，求该多项式的幂。
+设未知数为x,y，输入为x和y的整数系数a,b以及整数幂n，输出形如以下样式
+求幂运算的结果，按照x的幂降序排列
+
+Input Format
+输入未知数整数系数 a,b (-1000&lt;a,b&lt;1000),n (2&lt;n&lt;20)
+Output Format
+幂运算的结果的多项式，按照x幂降序排列  
+
+# Example
+Input
+99 100 15  
+Output
+860058354641288524893953951499x^15+13031187191534674619605362901500x^14y+92139707414891638724482363950000x^13y^2+403305116630838822699754455000000x^12y^3+1222136717063147947575013500000000x^11y^4+2715859371251439883500030000000000x^10y^5+4572153823655622699495000000000000x^9y^6+5937862108643665843500000000000000x^8y^7+5997840513781480650000000000000000x^7y^8+4712108147752005000000000000000000x^6y^9+2855823119849700000000000000000000x^5y^10+1311213553650000000000000000000000x^4y^11+441486045000000000000000000000000x^3y^12+102910500000000000000000000000000x^2y^13+14850000000000000000000000000000xy^14+1000000000000000000000000000000y^15
+
+# 说明
+幂为1时不输出^1
+系数为1时不输出系数，-1只输出负号。
+
+# 样例输入输出
+样例1
+输入:
+99 100 15
+输出:
+860058354641288524893953951499x^15+13031187191534674619605362901500x^14y+92139707414891638724482363950000x^13y^2+403305116630838822699754455000000x^12y^3+1222136717063147947575013500000000x^11y^4+2715859371251439883500030000000000x^10y^5+4572153823655622699495000000000000x^9y^6+5937862108643665843500000000000000x^8y^7+5997840513781480650000000000000000x^7y^8+4712108147752005000000000000000000x^6y^9+2855823119849700000000000000000000x^5y^10+1311213553650000000000000000000000x^4y^11+441486045000000000000000000000000x^3y^12+102910500000000000000000000000000x^2y^13+14850000000000000000000000000000xy^14+1000000000000000000000000000000y^15
+</code></pre>
+<p>Mind Palace: using string to represent big number, queue.</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+public:
+    // multiplyStr handles the sign bit.
+    static string multiplyStr(string a, string b) {
+        string ret;
+        // Handle the sign bit.
+        if (a[0] == '-' &amp;&amp; b[0] == '-') { a.erase(0, 1); b.erase(0, 1); }
+        if (a[0] == '-' &amp;&amp; b[0] != '-') { a.erase(0, 1); ret = &quot;-&quot;; }
+        if (a[0] != '-' &amp;&amp; b[0] == '-') { b.erase(0, 1); ret = &quot;-&quot;; }
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+
+        vector&lt;int&gt; res = vector&lt;int&gt;(a.size() + b.size());
+        for (int i = 0; i &lt; a.size(); ++i) {
+            for (int j = 0; j &lt; b.size(); ++j) {
+                res[i + j] += (a[i] - '0') * (b[j] - '0');
+            }
+        }
+        int carry = 0;
+        for (int &amp; n : res) {
+            int newCarry = (n + carry) / 10;
+            n = (n + carry) % 10;
+            carry = newCarry;
+        }
+        if (res.back() == 0) res.pop_back();
+        for (auto i = res.rbegin(); i != res.rend(); ++i)
+            ret += to_string(*i);
+        return ret;
+    }
+
+    // addStr only deals with positive a plus positive b.
+    static string addStr(string a, string b) {
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        vector&lt;int&gt; res = vector&lt;int&gt;(max(a.size(), b.size()) + 1);
+        string ret;
+        for (int i = 0; i &lt; min(a.size(), b.size()); ++i)
+            res[i] = (a[i] - '0') + (b[i] - '0');
+        for (int i = static_cast&lt;int&gt;(min(a.size(), b.size())); i &lt; a.size(); ++i)
+            res[i] = a[i] - '0';
+        for (int i = static_cast&lt;int&gt;(min(a.size(), b.size())); i &lt; b.size(); ++i)
+            res[i] = b[i] - '0';
+        int carry = 0;
+        for (int &amp; n : res) {
+            int newCarry = (n + carry) / 10;
+            n = (n + carry) % 10;
+            carry = newCarry;
+        }
+        if (res.back() == 0) res.pop_back();
+        for (auto i = res.rbegin(); i != res.rend(); ++i)
+            ret += to_string(*i);
+        return ret;
+    }
+
+    // subtractStr only deals with positive a minus positive b and a &gt;= b.
+    static string subtractStr(string a, string b) {
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        vector&lt;int&gt; res = vector&lt;int&gt;(a.size());
+        string ret;
+        int borrow = 0;
+        for (int i = 0; i &lt; b.size(); ++i) {
+            int tmp = (a[i] - '0') - (b[i] - '0') - borrow;
+            if (tmp &gt;= 0) { res[i] = tmp; borrow = 0; }
+            else { res[i] = tmp + 10; borrow = 1; }
+        }
+        for (int i = static_cast&lt;int&gt;(b.size()); i &lt; a.size(); ++i) {
+            int tmp = (a[i] - '0') - borrow;
+            if (tmp &gt;= 0) { res[i] = tmp; borrow = 0; }
+            else { res[i] = tmp + 10; borrow = 1; }
+        }
+        if (res.back() == 0) res.pop_back();
+        for (auto i = res.rbegin(); i != res.rend(); ++i)
+            ret += to_string(*i);
+        return ret;
+    }
+
+    // Judge a and b which one is bigger, with no sign bit.
+    // If a &gt;= b, return true.
+    // If a &lt;  b, return false.
+    static bool judgeStr(const string&amp; a, const string&amp; b) {
+        if (a.size() &gt; b.size()) return true;
+        if (a.size() == b.size()) return a &gt;= b;
+        return false;
+    }
+
+    static void run() {
+        int a, b, n; cin &gt;&gt; a &gt;&gt; b &gt;&gt; n;
+        queue&lt;string&gt; que;
+        que.push(&quot;0&quot;); que.push(to_string(a)); que.push(to_string(b));
+        string first = que.front(); que.pop();
+        string second = &quot;0&quot;;
+        string num1, num2, tmp;
+        for (int i = 0; i &lt; n - 1; ++i) {
+            que.push(&quot;0&quot;);
+            for (int j = 0; j &lt; i + 3; ++j) {
+                second = que.front(); que.pop();
+                // String multiplication, addition, subtraction.
+                // tmp = first * b + second * a;
+                num1 = multiplyStr(first, to_string(b));
+                num2 = multiplyStr(second, to_string(a));
+
+                if (num1[0] != '-' &amp;&amp; num2[0] != '-')
+                    tmp = addStr(num1, num2);
+                if (num1[0] == '-' &amp;&amp; num2[0] == '-')
+                    tmp = &quot;-&quot; + addStr(num1.erase(0, 1), num2.erase(0, 1));
+                if (num1[0] != '-' &amp;&amp; num2[0] == '-') {
+                    if (judgeStr(num1, num2.erase(0, 1)))
+                        tmp = subtractStr(num1, num2);
+                    else
+                        tmp = &quot;-&quot; + subtractStr(num2, num1);
+                }
+                if (num1[0] == '-' &amp;&amp; num2[0] != '-') {
+                    if (judgeStr(num1.erase(0, 1), num2))
+                        tmp = &quot;-&quot; + subtractStr(num1, num2);
+                    else
+                        tmp = subtractStr(num2, num1);
+                }
+
+                que.push(tmp);
+                first = second;
+            }
+        }
+
+        int power = n; // Power of x; Power of y is n - power.
+        while (!que.empty()) {
+            // Print sign symbol.
+            if (power != n &amp;&amp; que.front() &gt; &quot;0&quot;) cout &lt;&lt; &quot;+&quot;;
+            // Print the coefficient.
+            if (que.front() == &quot;1&quot;) {
+                cout &lt;&lt; &quot;&quot;;
+                que.pop();
+            } else if (que.front() == &quot;-1&quot;) {
+                cout &lt;&lt; &quot;-&quot;;
+                que.pop();
+            } else {
+                cout &lt;&lt; que.front();
+                que.pop();
+            }
+            // Print x and y.
+            if (power != 0) cout &lt;&lt; &quot;x&quot;;
+            if (power &gt;  1) cout &lt;&lt; &quot;^&quot; &lt;&lt; power;
+            if (n - power != 0) cout &lt;&lt; &quot;y&quot;;
+            if (n - power &gt;  1) cout &lt;&lt; &quot;^&quot; &lt;&lt; n - power;
+            power--;
+        }
+
+    }
+};
+
+int main() {
+    Solution::run();
+    return 0;
+}
+</code></pre>
+<h1 id="表达式求值">表达式求值</h1>
+<pre><code class="language-Markdown"># 题目描述
+设计一个表达式求值的程序。该程序必须可以接受包含（，），+，-，*，/，%和^(求幂)的中缀表达式，并求出结果。如果表达式正确，则输出表达式的值，如果表达式非法，则输出错误信息。
+注意2^2^3转为后缀应为223^^
+
+操作数均转为double运算。
+幂运算可以直接使用pow(a,b)
+%,操作数转为Int再进行计算。
+
+输入要求：
+多个表达式，每个表达式占一行。
+输出要求：
+对每个表达式，如果为正确表达式则输出结果（精确到小数点后两位），如果为错误表达式则输出“ERROR IN INFIX NOTATION”.
+
+# 样例输入输出
+样例1
+输入:
+(2-4)^3
+输出:
+-8.00
+样例2
+输入:
+(3*5*(4+8)%2)
+输出:
+0.00
+样例3
+输入:
+1+2(
+输出:
+ERROR IN INFIX NOTATION
+</code></pre>
+<p>Mind Palace: two stacks and proper calculation rules.</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+private:
+    // Operator priority map.
+    const map&lt;char, int8_t&gt; priority = {
+            {'+', 0}, {'-', 0},
+            {'*', 1}, {'/', 1}, {'%', 1},
+            {'^', 2},
+            {'#', 3}
+    };
+    bool wrongExp = false;
+public:
+    double calcu(double&amp; a, double&amp; b, char&amp; op) {
+        double ans;
+        switch (op) {
+            case '+':
+                ans = a + b;
+                break;
+            case '-':
+                ans = a - b;
+                break;
+            case '*':
+                ans = a * b;
+                break;
+            case '/':
+                if (b != 0.0) ans = a / b;
+                else this-&gt;wrongExp = true;
+                break;
+            case '%':
+                if (b != 0.0) ans = fmod(a, b);
+                else this-&gt;wrongExp = true;
+                break;
+            case '^':
+                ans = pow(a, b);
+                break;
+            default:
+                this-&gt;wrongExp = true;
+        }
+        return ans;
+    }
+
+    void oneProcess(vector&lt;char&gt;&amp; operators, vector&lt;double&gt;&amp; operands) {
+        if (operators.back() == '#') {
+            double a;
+            if (!operands.empty()) { a = operands.back(); operands.pop_back(); }
+            else this-&gt;wrongExp = true;
+            operands.push_back(-a);
+            return;
+        }
+        double a, b, tmp;
+        // Exp: a `operator` b.
+        if (!operands.empty()) { b = operands.back(); operands.pop_back(); }
+        else this-&gt;wrongExp = true;
+        if (!operands.empty()) { a = operands.back(); operands.pop_back(); }
+        else this-&gt;wrongExp = true;
+        if (!operators.empty()) {
+            char op = operators.back();
+            operators.pop_back();
+            tmp = this-&gt;calcu(a, b, op);
+        } else this-&gt;wrongExp = true;
+        if (!this-&gt;wrongExp) operands.push_back(tmp);
+    }
+
+    // Traverse the whole string and change '-' which represents negative sign into '#'.
+    static void preprocess(string&amp; exp) {
+        for (int i = 0; i &lt; exp.size(); ++i) {
+            if (exp[i] == '-' &amp;&amp; (i != 0 &amp;&amp; (exp[i-1] == ')' || (exp[i-1] &gt;= '0' &amp;&amp; exp[i-1] &lt;= '9'))) )
+                continue;
+            else if (exp[i] == '-')
+                exp.replace(i, 1, &quot;#&quot;);
+        }
+    }
+
+    void run() {
+        string exp; cin &gt;&gt; exp;
+        Solution::preprocess(exp);
+        vector&lt;char&gt; operators; vector&lt;double&gt; operands; // Use vector to represent stack.
+        for (int i = 0; i &lt; exp.size(); ) {
+            // Handle the chars which belong to operators.
+            if (exp[i] == '(') { operators.push_back(exp[i]); ++i; continue; }
+            if (this-&gt;priority.find(exp[i]) != this-&gt;priority.end()) {
+                if (operators.empty()) {
+                    operators.push_back(exp[i]);
+                    ++i; continue;
+                }
+                // When op exp[i] is prioritized than the front of stack, push exp[i] into stack.
+                if (!operators.empty()
+                    &amp;&amp; (this-&gt;priority.find(operators.back())-&gt;second &lt; this-&gt;priority.find(exp[i])-&gt;second
+                        || operators.back() == '(')) {
+                    operators.push_back(exp[i]);
+                    ++i; continue;
+                }
+                // When op exp[i] is lowerly or equally prioritized than the front of stack;
+                // pop one operator and two operands, calculate subexp, push operand into operands stack,
+                // until op exp[i] is prioritized than the front of stack or operators stack is empty.
+                while (!operators.empty()
+                    &amp;&amp; this-&gt;priority.find(operators.back())-&gt;second &gt;= this-&gt;priority.find(exp[i])-&gt;second) {
+                    oneProcess(operators, operands);
+                    if (this-&gt;wrongExp) { cout &lt;&lt; &quot;ERROR IN INFIX NOTATION&quot;; return; }
+                }
+                operators.push_back(exp[i]);
+                ++i; continue;
+
+            }
+            if (exp[i] == ')') {
+                while (operators.back() != '(') {
+                    oneProcess(operators, operands);
+                    if (this-&gt;wrongExp) { cout &lt;&lt; &quot;ERROR IN INFIX NOTATION&quot;; return; }
+                }
+                operators.pop_back(); // Pop '(' from stack.
+                ++i; continue;
+            }
+
+            // Handle the chars which belong to operands.
+            string num;
+            double operand;
+            while ((exp[i] &gt;= '0' &amp;&amp; exp[i] &lt;= '9') || exp[i] == '.') {
+                num += exp[i];
+                ++i;
+            }
+            operand = stod(num);
+            operands.push_back(operand);
+        }
+        // After traversing the whole exp string, then handle the left ops inside operators stack.
+        while (!operators.empty()) {
+            oneProcess(operators, operands);
+            if (this-&gt;wrongExp) { cout &lt;&lt; &quot;ERROR IN INFIX NOTATION&quot;; return; }
+        }
+        if (operands.size() != 1) { cout &lt;&lt; &quot;ERROR IN INFIX NOTATION&quot;; return; }
+        // Print out result. (Q: c++ cout precision 2)
+        // cout &lt;&lt; setprecision(2) &lt;&lt; operands.back();
+        printf(&quot;%.2lf&quot;, operands.back());
+    }
+};
+
+int main() {
+    Solution().run();
+    return 0;
+}
+</code></pre>
+<h1 id="根据next数组推导模式字符串">根据next数组推导模式字符串</h1>
+<pre><code class="language-Markdown"># 题目描述
+根据KMP算法的next数组值，推断模式字符串。
+假设模式字符串中只存在0，1两种字符。给出首字符和next数组。请输出模式字符串。如果next数组不合法则输出ERROR
+
+Input Format
+先输入模式字符串首字符0或者1，然后输入尾字符0或者1
+再输入 模式字符串长度n，n&lt;=30
+最后输入n个以 -1，0，起始的整数。
+
+Output Format
+模式字符串 或者 ERROR 
+
+# Example
+Input
+1 0 10
+-1 0 1 2 3 4 0 1 2 3
+Output
+1111101110
+
+Input
+1 1 6
+-1 0 0 0 0 0
+Output
+100001
+
+Input
+1 1 6
+-1 0 2 0 0 0
+Output
+ERROR
+
+说明
+以传统未优化的KMP算法推导的next数组。
+
+# 样例输入输出
+样例1
+输入:
+1 1 6
+-1 0 0 0 0 0
+输出:
+100001
+
+样例2
+输入:
+1 1 6
+-1 0 2 0 0 0
+输出:
+ERROR
+
+样例3
+输入:
+1 1 7
+-1 0 1 2 3 4 2
+输出:
+ERROR
+</code></pre>
+<p>Mind Palace: next list in kmp.</p>
+<pre><code class="language-python">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+public:
+    static void run() {
+        int front, back, n; cin &gt;&gt; front &gt;&gt; back &gt;&gt; n;
+        vector&lt;int&gt; next(n), res(n);
+        for (int i = 0; i &lt; n; ++i)
+            cin &gt;&gt; next[i];
+
+        int curr;
+        res[0] = front;
+        for (int i = 2; i &lt; n; ++i) {
+            if (next[i] == 0) {
+                if (front == 1) curr = 0;
+                else curr = 1;
+            } else {
+                if (next[i] &gt;= i || (i != next[i] + 1 &amp;&amp; res[i - next[i] - 1] == res[0]))
+                    { cout &lt;&lt; &quot;ERROR&quot; &lt;&lt; endl; return; }
+                else
+                    { curr = res[next[i] - 1]; }
+            }
+            res[i- 1] = curr;
+        }
+        for (int i = 0; i &lt; n - 1; ++i)
+            cout &lt;&lt; res[i];
+        cout &lt;&lt; back &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Solution::run();
+    return 0;
+}
+</code></pre>
+<h1 id="三元组表示的稀疏矩阵的乘法运算">三元组表示的稀疏矩阵的乘法运算</h1>
+<pre><code class="language-Markdown"># 题目描述
+对两个由三元组表示的稀疏矩阵进行乘法运算
+
+输入：
+第一行为三个整数row，column，count，用空格分隔，分别表示稀疏矩阵的行数、列数、非零元素的个数。
+第二行开始输入该稀疏矩阵的三元组，每行三个整数，空格分隔，分别代表一个非零元素的行标、列标、值，共输入count行。
+空一行后开始输入第二个稀疏矩阵的row，column，count，及三元组。
+输出：
+如果计算结果为零矩阵，输出“The answer is a Zero Matrix”,如果结果为非零矩阵，输出结果的三元组表示，要求输出三元组有序,行尾无空格。如果无法计算矩阵乘法，输出“ERROR”。
+
+# 样例输入输出
+样例1
+输入:
+2 2 2
+1 1 1
+2 2 1
+
+2 2 2
+1 2 2
+2 1 2
+输出:
+1 2 2
+2 1 2
+样例2
+输入:
+2 2 1
+1 1 5
+
+2 2 1
+2 2 -5
+输出:
+The answer is a Zero Matrix
+样例3
+输入:
+3 3 3
+1 3 1
+2 1 1
+3 2 1
+
+2 2 3
+1 2 1
+2 1 1
+2 2 1
+输出:
+ERROR
+</code></pre>
+<p>Mind Palace: loop and sort.</p>
+<pre><code class="language-python">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+public:
+    static bool cmp(const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) {
+        if (a[0] &lt;= b[0] &amp;&amp; a[1] &lt; b[1]) return true;
+        return false;
+    }
+
+    static void run() {
+        int row1, col1, n1, row2, col2, n2;
+        vector&lt;vector&lt;int&gt;&gt; m1, m2, res;
+        cin &gt;&gt; row1 &gt;&gt; col1 &gt;&gt; n1;  // Init matrix1.
+        for (int i = 0; i &lt; n1; ++i) {
+            int a, b, c; cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+            m1.push_back({ a, b, c});
+        }
+        cin &gt;&gt; row2 &gt;&gt; col2 &gt;&gt; n2;  // Init matrix2.
+        for (int i = 0; i &lt; n2; ++i) {
+            int a, b, c; cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+            m2.push_back({ a, b, c});
+        }
+        if (col1 != row2)
+            { cout &lt;&lt; &quot;ERROR&quot; &lt;&lt; endl; return; }
+
+        for (int i = 0; i &lt; n1; ++i) {
+            for (int j = 0; j &lt; n2; ++j) {
+                if (m1[i][1] == m2[j][0]) {
+                    int flag = 0;
+                    // If res has this element, add them together.
+                    for (auto &amp; re : res) {
+                        if (re[0] == m1[i][0] &amp;&amp; re[1] == m2[j][1])
+                            { re[2] += m1[i][2] * m2[j][2]; flag = 1; break; }
+                    }
+                    // If not, push a new vector.
+                    if (flag == 0) res.push_back({m1[i][0], m2[j][1], m1[i][2] * m2[j][2]});
+                }
+            }
+        }
+
+        if (res.empty()) { cout &lt;&lt; &quot;The answer is a Zero Matrix&quot; &lt;&lt; endl; return; }
+        std::sort(res.begin(), res.end(), cmp);  // Sort the matrix before printing.
+        for (const auto &amp; re : res) {
+            cout &lt;&lt; re[0] &lt;&lt; &quot; &quot; &lt;&lt; re[1] &lt;&lt; &quot; &quot; &lt;&lt; re[2] &lt;&lt; endl;
+        }
+    }
+};
+
+int main() {
+    Solution::run();
+    return 0;
+}
+</code></pre>
+<h1 id="求整数最大间隔-性能">求整数最大间隔-性能</h1>
+<pre><code class="language-Markdown"># 题目描述
+请输出数字序列的最大间隔。
+
+请使用以下伪随机数生成函数 rand32 () 生成伪随机数
+
+int  seed  ;
+int rand(){ return((( seed   =  seed   * 214013L + 2531011L) &gt;&gt; 16) &amp; 0x7fff); }
+int rand32(){
+return ((rand() &lt;&lt; 16) + (rand() &lt;&lt; 1) + rand() % 2);
+}
+
+## Input Format
+
+2个整数，n seed 其中 2&lt;n&lt;=20000000，seed为随机数种子。
+
+## Output Format
+整数序列的最大间隔
+
+## Example
+Input
+2000000
+1
+
+Output
+15737
+
+注意：O(nlogn)以上的时间复杂度至少会有一个案例超时。
+
+# 样例输入输出
+样例1
+输入:
+1959000 4910
+输出:
+16709
+</code></pre>
+<p>Mind Palace: hash table.</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+private:
+    int n;
+    int seed;
+
+private:
+    int randI() {
+        return ((( seed = seed * 214013L + 2531011L) &gt;&gt; 16) &amp; 0x7fff);
+    }
+
+    int rand32() {
+        return ((randI() &lt;&lt; 16) + (randI() &lt;&lt; 1) + randI() % 2);
+    }
+
+    int maxGap(vector&lt;int&gt; &amp; vec) {
+        int minNum = vec[0], maxNum = vec[0];
+        for (const auto &amp; ele : vec) {
+            if (ele &lt; minNum) minNum = ele;
+            if (ele &gt; maxNum) maxNum = ele;
+        }
+        if (minNum == maxNum) return 0;
+
+        vector&lt;bool&gt; hasNum(n + 1);
+        vector&lt;int&gt; mins(n + 1); vector&lt;int&gt; maxs(n + 1);
+        for (int i = 0; i &lt; n; i++) {
+            double gap = (static_cast&lt;double &gt;(maxNum) - static_cast&lt;double &gt;(minNum)) / (n - 1);
+            int index = static_cast&lt;int&gt;((vec[i] - minNum) / gap);
+            if (hasNum[index]) {
+                mins[index] = min(vec[i], mins[index]);
+                maxs[index] = max(vec[i], maxs[index]);
+            } else {
+                mins[index] = maxs[index] = vec[i];
+                hasNum[index] = true;
+            };
+        }
+
+        int maxGap = 0;
+        int lastMax = maxs[0];
+        for (int i = 0; i &lt; n + 1; i++) {
+            if (hasNum[i]) {
+                maxGap = max(maxGap, (mins[i] - lastMax));
+                lastMax = maxs[i];
+            }
+        }
+        return maxGap;
+    }
+
+public:
+    void run() {
+        cin &gt;&gt; n &gt;&gt; seed;
+        vector&lt;int&gt; vec(n);
+        for (int i = 0; i &lt; n; i++)
+            vec[i] = rand32();
+        cout &lt;&lt; maxGap(vec) &lt;&lt; endl;
+    }
+};
+
+int main () {
+    Solution().run();
+    return 0;
+}
+</code></pre>
+<h1 id="完全二叉树的先序遍历">完全二叉树的先序遍历</h1>
+<pre><code class="language-Markdown"># 题目描述
+给出一棵完全二叉树的先序遍历，输出其后序遍历。结点均为不重复的单个英文字母，区分大小写。结点总数小于52。
+
+Input Format
+
+输入先序字符串
+
+Output Format
+后序遍历字符串
+
+Example
+Input
+ABDGHCEIF
+
+Output
+GHDCBIFEA
+
+# 样例输入输出
+样例1
+输入:
+ABDGHCEIF
+输出:
+GHDCBIFEA
+样例2
+输入:
+a
+输出:
+a
+</code></pre>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+private:
+    string preOrder;
+    unsigned long n = 0;
+    unsigned long index = 0;
+    vector&lt;char&gt; levelOrder;
+
+    void getLevel(int x) {
+        if (x &gt; n) return;
+        levelOrder[x] = preOrder[index++];
+        getLevel(x * 2);
+        getLevel(x * 2 + 1);
+    }
+
+    void getPost(int x) {
+        if (x &gt; n) return;
+        getPost(x * 2);
+        getPost(x * 2 + 1);
+        cout &lt;&lt; levelOrder[x];
+    }
+
+public:
+    void Run() {
+        cin &gt;&gt; preOrder;
+        n = preOrder.size();
+        levelOrder = vector&lt;char&gt;(n + 1);
+
+        index = 0;
+        getLevel(1);
+        getPost(1);
+    }
+};
+
+int main () {
+    Solution().Run();
+    return 0;
+}
+</code></pre>
+<h1 id="二叉树遍历及二叉树高度">二叉树遍历及二叉树高度</h1>
+<pre><code class="language-Markdown"># 题目描述
+给出一棵二叉树的先序遍历和中序遍历序列，计算该二叉树的高度。其中，二叉树的先序和中序遍历序列为不包含重复英文字母（区别大小写）的字符串。
+
+Input Format
+二叉树结点的总个数n&lt;=50
+然后输入先序和中序遍历序列，两个序列长度均为n。  
+
+Output Format
+二叉树高度（整数） ，叶子结点高度为1 
+
+Example
+Input
+9
+ABDGHCEIF
+GDHBAEICF
+
+Output
+4
+
+# 样例输入输出
+样例1
+输入:
+9
+ABDGHCEIF
+GDHBAEICF
+输出:
+4
+</code></pre>
+<p>Mind Palace: recursion.</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+private:
+    vector&lt;char&gt; preOrder;
+    vector&lt;char&gt; inOrder;
+public:
+    int getHeight(int preFirst, int inFirst, int len) {
+        if (len == 0) return 0;
+        int delim = inFirst;
+        // Find the root node of current tree.
+        for (int i = 0; i &lt; len; i++) {
+            if (inOrder[inFirst + i] == preOrder[preFirst])
+                { delim = i; break; }
+        }
+        // Recursively get the max height from left and right subtrees.
+        int leftH = getHeight(preFirst+1, inFirst, delim);
+        int rightH = getHeight(preFirst+delim+1, inFirst+delim+1, len-delim-1);
+        return max(leftH, rightH) + 1;
+    }
+    void run() {
+        int nodeNum; cin &gt;&gt; nodeNum;
+        preOrder = vector&lt;char&gt;(nodeNum);
+        inOrder = vector&lt;char&gt;(nodeNum);
+        for (int i = 0; i &lt; nodeNum; i++)
+            cin &gt;&gt; preOrder[i];
+        for (int i = 0; i &lt; nodeNum; i++)
+            cin &gt;&gt; inOrder[i];
+        cout &lt;&lt; getHeight(0, 0, nodeNum) &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Solution().run();
+    return 0;
+}
+</code></pre>
+<h1 id="判断是否为堆-堆整理">判断是否为堆-堆整理</h1>
+<pre><code class="language-Markdown"># 题目描述
+请判断输入的整数序列是否为堆。
+如果为最大堆，请输出“max ”以及整理后的最小堆，整数序列数字之间有空格，最后无空格。
+如果为最小堆，请输出“min ” 以及整理后的最大堆，整数序列数字之间有空格，最后无空格。
+如果不为堆，请输出整理后的最大堆，整数序列数字之间有空格，最后无空格。
+如果既是最大堆也是最小堆，请只输出“max min ”
+
+## Input Format
+先输入整数序列个数n 0&lt;n&lt;1000
+然后输入n个整数序列，整数取值范围【-100000，100000】
+## Output Format
+最大堆或最小堆序列
+
+## Example
+Input
+10
+-8 8 -9 10 -2 1 -6 -9 7 2 
+Output
+10 8 1 7 2 -9 -6 -9 -8 -2
+
+Input
+10
+10 8 1 7 2 -9 -6 -9 -8 -2
+Output
+max -9 -9 -6 -8 -2 1 10 7 8 2
+
+Input
+ 10
+-9 -9 -6 -8 -2 1 10 7 8 2
+Output
+min 10 8 1 7 2 -9 -6 -9 -8 -2
+
+Input
+ 3
+1 1 1
+Output
+max min 
+
+注意：序列最后无空格,max和min后面均有空格。
+如案例，定义以下实现约束：两个相等子节点情况下，整理过程中，父节点下沉时，选择右沉。
+
+10
+
+10 8 1 7 2 -9 -6 -9 -8 -2
+ 两个相等子节点情况下，整理过程中，父节点下沉时，选择右沉。
+
+# 样例输入输出
+## 样例1
+输入:
+10
+-9 -9 -6 -8 -2 1 10 7 8 2
+输出:
+min 10 8 1 7 2 -9 -6 -9 -8 -2
+## 样例2
+输入:
+3
+1 1 1
+输出:
+max min 
+## 样例3
+输入:
+10
+10 8 1 7 2 -9 -6 -9 -8 -2
+输出:
+max -9 -9 -6 -8 -2 1 10 7 8 2
+## 样例4
+输入:
+10
+-8 8 -9 10 -2 1 -6 -9 7 2 
+输出:
+10 8 1 7 2 -9 -6 -9 -8 -2
+</code></pre>
+<p>Mind Palace:<br>
+这道题的坑点在 最小堆的调整上 当两个子结点的数值相同时，(题目给出的答案是)根节点与右子结点交换</p>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class Solution {
+private:
+    vector&lt;int&gt; arr;
+    int arrLen = 0;
+    bool isMinHeap = true;
+    bool isMaxHeap = true;
+
+public:
+    // Check whether arr is a min heap.
+    void checkMinHeap(int root) {
+        if (root * 2 + 1 &lt; arr.size() &amp;&amp; arr[root] &gt; arr[root * 2 + 1]) { isMinHeap = false; return; }
+        if (root * 2 + 2 &lt; arr.size() &amp;&amp; arr[root] &gt; arr[root * 2 + 2]) { isMinHeap = false; return; }
+        if (isMinHeap &amp;&amp; root * 2 + 1 &lt; arr.size()) checkMinHeap(root * 2 + 1);
+        else return;
+        if (isMinHeap &amp;&amp; root * 2 + 2 &lt; arr.size()) checkMinHeap(root * 2 + 2);
+        else return;
+    }
+
+    // Check whether arr is a max heap.
+    void checkMaxHeap(int root) {
+        if (root * 2 + 1 &lt; arr.size() &amp;&amp; arr[root] &lt; arr[root * 2 + 1]) { isMaxHeap = false; return; }
+        if (root * 2 + 2 &lt; arr.size() &amp;&amp; arr[root] &lt; arr[root * 2 + 2]) { isMaxHeap = false; return; }
+        if (isMaxHeap &amp;&amp; root * 2 + 1 &lt; arr.size()) checkMaxHeap(root * 2 + 1);
+        else return;
+        if (isMaxHeap &amp;&amp; root * 2 + 2 &lt; arr.size()) checkMaxHeap(root * 2 + 2);
+        else return;
+    }
+
+    void printArr() {
+        for (auto i = arr.begin(); i != arr.end(); i++) {
+            cout &lt;&lt; *i;
+            if (i != arr.end() - 1) cout &lt;&lt; &quot; &quot;;
+        }
+        cout &lt;&lt; endl;
+    }
+
+    // Adjust max heap.
+    void adjustMaxHeap(int ind) {
+        if (ind * 2 + 1 &lt; arrLen &amp;&amp; arr[ind * 2 + 1] &gt; arr[ind] &amp;&amp; (ind * 2 + 2 &gt;= arrLen || arr[ind * 2 + 1] &gt; arr[ind * 2 + 2])) {
+            int temp = arr[ind * 2 + 1];
+            arr[ind * 2 + 1] = arr[ind];
+            arr[ind] = temp;
+        }
+        if (ind * 2 + 2 &lt; arrLen &amp;&amp; arr[ind * 2 + 2] &gt; arr[ind] &amp;&amp; arr[ind * 2 + 1] &lt;= arr[ind * 2 + 2]) {
+            int temp = arr[ind * 2 + 2];
+            arr[ind * 2 + 2] = arr[ind];
+            arr[ind] = temp;
+        }
+        if (ind * 2 + 1 &lt; arrLen) adjustMaxHeap(ind * 2 + 1);
+        if (ind * 2 + 2 &lt; arrLen) adjustMaxHeap(ind * 2 + 2);
+    }
+
+    // Make arr into max heap.
+    void makeMaxHeap() {
+        int ind = arrLen / 2 - 1;
+        for (int i = ind; i &gt;= 0; i--)
+            adjustMaxHeap(i);
+    }
+
+    // Adjust min heap.
+    void adjustMinHeap(int ind) {
+        if (ind * 2 + 1 &lt; arrLen &amp;&amp; arr[ind * 2 + 1] &lt; arr[ind] &amp;&amp; (ind * 2 + 2 &gt;= arrLen || arr[ind * 2 + 1] &lt; arr[ind * 2 + 2])) {
+            int temp = arr[ind * 2 + 1];
+            arr[ind * 2 + 1] = arr[ind];
+            arr[ind] = temp;
+        }
+        if (ind * 2 + 2 &lt; arrLen &amp;&amp; arr[ind * 2 + 2] &lt; arr[ind] &amp;&amp; arr[ind * 2 + 1] &gt;= arr[ind * 2 + 2]) {
+            int temp = arr[ind * 2 + 2];
+            arr[ind * 2 + 2] = arr[ind];
+            arr[ind] = temp;
+        }
+        if (ind * 2 + 1 &lt; arrLen) adjustMinHeap(ind * 2 + 1);
+        if (ind * 2 + 2 &lt; arrLen) adjustMinHeap(ind * 2 + 2);
+    }
+
+    // Make arr into min heap.
+    void makeMinHeap() {
+        int ind = arrLen / 2 - 1;
+        for (int i = ind; i &gt;= 0; i--)
+            adjustMinHeap(i);
+    }
+
+    void Run() {
+        cin &gt;&gt; arrLen;
+        arr = vector&lt;int&gt;(arrLen);
+        for (int i = 0; i &lt; arrLen; i++)
+            cin &gt;&gt; arr[i];
+
+        checkMinHeap(0);
+        checkMaxHeap(0);
+        if (isMinHeap &amp;&amp; isMaxHeap) { cout &lt;&lt; &quot;max min&quot; &lt;&lt; endl; return; }
+        if (isMinHeap) { cout &lt;&lt; &quot;min &quot;; makeMaxHeap(); printArr(); return; }
+        if (isMaxHeap) { cout &lt;&lt; &quot;max &quot;; makeMinHeap(); printArr(); return; }
+        makeMaxHeap(); printArr();
+    }
+};
+
+int main() {
+    Solution().Run();
+    return 0;
+}
+</code></pre>
+<h1 id="创建avl树并判断是否为完全二叉树">创建AVL树并判断是否为完全二叉树</h1>
+<pre><code class="language-Markdown"># 题目描述
+在AVL树中，任何节点的两个子树的高度最多相差1；如果它们高度相差不止1，则需要重新平衡以恢复这种属性。
+现在给定一个插入序列， 一个一个地将键值插入初始为空的AVL树中，输出得到的AVL树的层次顺序遍历序列，并判断它是否是一个完全二叉树。
+
+输入格式：
+第一行包含一个正整数N(&lt;= 20)。然后在下一行给出N个不同的整数键。所有数字都用空格隔开。
+输出格式：
+第一行打印得到的AVL树的层次顺序遍历序列。所有数字都必须用空格隔开，并且行尾必须没有多余的空格。然后在下一行中，如果树为完全二叉树，则打印“Yes”;如果不是，则打印“No”。
+
+样例输入1：
+5
+88 70 61 63 65 
+样例输出1：
+70 63 88 61 65
+Yes
+
+样例输入2：
+10
+62 88 58 47 35 73 51 99 37 93 
+样例输出2：
+62 47 88 35 58 73 99 37 51 93
+No  
+
+# 样例输入输出
+样例1
+输入:
+5
+88 70 61 63 65
+输出:
+70 63 88 61 65
+Yes
+样例2
+输入:
+10
+62 88 58 47 35 73 51 99 37 93
+输出:
+62 47 88 35 58 73 99 37 51 93
+No
+</code></pre>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+struct Node {
+    int val, height;
+    Node * left, * right;
+    Node(int v, int h);
+};
+
+Node::Node(int v, int h) {
+    this-&gt;val = v;
+    this-&gt;height = h;
+    this-&gt;left = nullptr;
+    this-&gt;right = nullptr;
+}
+
+int getHeight(Node * root) {
+    if (root == nullptr) return 0;
+    else return root-&gt;height;
+}
+
+Node * llRotate(Node * root) {
+    Node * temp = root-&gt;right;
+    root-&gt;right = temp-&gt;left;
+    temp-&gt;left = root;
+    // Update root and temp's height (root first, because temp's height rely on root's height.
+    root-&gt;height = max(getHeight(root-&gt;left), getHeight(root-&gt;right)) + 1;
+    temp-&gt;height = max(getHeight(temp-&gt;left), getHeight(temp-&gt;right)) + 1;
+    return temp;
+}
+
+Node * rrRotate(Node * root) {
+    Node * temp = root-&gt;left;
+    root-&gt;left = temp-&gt;right;
+    temp-&gt;right = root;
+    // Update root and temp's height (root first, because temp's height rely on root's height.
+    root-&gt;height = max(getHeight(root-&gt;left), getHeight(root-&gt;right)) + 1;
+    temp-&gt;height = max(getHeight(temp-&gt;left), getHeight(temp-&gt;right)) + 1;
+    return temp;
+}
+
+Node * lrRotate(Node * root) {
+    root-&gt;left = llRotate(root-&gt;left);
+    return rrRotate(root);
+}
+
+Node * rlRotate(Node * root) {
+    root-&gt;right = rrRotate(root-&gt;right);
+    return llRotate(root);
+}
+
+Node * insert(Node * root, int val) {
+    if (root == nullptr) {
+        root = new Node(val, 1);
+    } else if (val &lt; root-&gt;val) {
+        root-&gt;left = insert(root-&gt;left, val);
+        root-&gt;height = max(getHeight(root-&gt;left), getHeight(root-&gt;right)) + 1;
+        if (getHeight(root-&gt;left) - getHeight(root-&gt;right) ==  2) {
+            if (val &lt; root-&gt;left-&gt;val)
+                root = rrRotate(root);  // Right Right Rotate.
+            else
+                root = lrRotate(root);  // Left Right Rotate.
+        }
+    } else if (val &gt; root-&gt;val) {
+        root-&gt;right = insert(root-&gt;right, val);
+        root-&gt;height = max(getHeight(root-&gt;left), getHeight(root-&gt;right)) + 1;
+        if (getHeight(root-&gt;left) - getHeight(root-&gt;right) == -2) {
+            if (val &gt; root-&gt;right-&gt;val)
+                root = llRotate(root);  // Left Left Rotate.
+            else
+                root = rlRotate(root);  // Right Left Rotate.
+        }
+    }
+    return root;
+}
+
+bool judgeComplete(Node * root) {
+    queue&lt;Node *&gt; que; que.push(root);
+    Node * temp;
+    while ((temp = que.front()) != nullptr) {
+        que.pop();
+        que.push(temp-&gt;left); que.push(temp-&gt;right);
+    }
+    while (!que.empty()) {
+        temp = que.front(); que.pop();
+        if (nullptr != temp)
+            return false;  // root is not a complete binary tree.
+    }
+    return true;
+}
+
+int main() {
+    int len, num; cin &gt;&gt; len;
+    Node * root = nullptr;
+    // Insert nodes into AVL tree.
+    for (int i = 0; i &lt; len; i++) {
+        cin &gt;&gt; num;
+        root = insert(root, num);
+    }
+    // Level order traversal.
+    queue&lt;Node *&gt; lOrder; lOrder.push(root);
+    while (!lOrder.empty()) {
+        Node * temp = lOrder.front(); lOrder.pop();
+        if (temp-&gt;left != nullptr) lOrder.push(temp-&gt;left);
+        if (temp-&gt;right != nullptr) lOrder.push(temp-&gt;right);
+        cout &lt;&lt; temp-&gt;val;
+        if (!lOrder.empty()) cout &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+    // Judge whether AVL tree is a complete binary tree.
+    if (judgeComplete(root)) cout &lt;&lt; &quot;Yes&quot; &lt;&lt; endl;
+    else cout &lt;&lt; &quot;No&quot; &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+<h1 id="村庄是否联通">村庄是否联通</h1>
+<pre><code class="language-Markdown"># 题目描述
+村庄中存在一些路，根据输入的相邻村庄的路，判断某两个村庄是否能够联通。n个村庄使用0到n-1的不同整数标识。路使用取值范围【0，n-1】的整数对表示。例如 3 5，代表村庄3和5之间有一条路。
+Input Format
+村庄个数 n， 0&lt;n&lt;=20
+路的条数 m，0&lt;m&lt;=50
+m条路，即为2m个范围在【0，n-1】的整数   
+需要判断是否相连的村庄对数 p 0&lt;p&lt;=10
+需要判断是否相连的p对村庄，即为2p个范围在【0，n-1】的整数。
+Output Format
+能够连通输出
+true
+,不可连通输出
+false
+
+# Example
+Input
+5
+4
+0 4
+2 4
+0 2
+1 3
+2
+3 4
+2 4
+Output
+false
+true
+</code></pre>
+<pre><code class="language-c++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class UnionFind {
+private:
+    vector&lt;int&gt; parent;
+    int size;
+
+public:
+    UnionFind(int s) {
+        size = s;
+        parent = vector&lt;int&gt;(size);
+        for (int i = 0; i &lt; size; i++)
+            parent[i] = i;
+    }
+
+    int find(int ele) {
+        while (parent[ele] != ele)
+            ele = parent[ele];
+        return ele;
+    }
+
+    void combine(int ele1, int ele2) {
+        int par1 = find(ele1);
+        int par2 = find(ele2);
+        if (par1 == par2) return;
+        else {
+            if (par1 &gt; par2)
+                parent[par2] = par1;
+            else if (par1 &lt; par2)
+                parent[par1] = par2;
+            return;
+        }
+    }
+
+    bool isConnect(int ele1, int ele2) {
+        return (find(ele1) == find(ele2));
+    }
+};
+
+class Solution {
+public:
+    static void run() {
+        int n, m, p;
+        int ele1, ele2;
+        bool ret;
+
+        cin &gt;&gt; n &gt;&gt; m;
+        auto u = UnionFind(n);
+        for (int i = 0; i &lt; m; i++) {
+            cin &gt;&gt; ele1 &gt;&gt; ele2;
+            u.combine(ele1, ele2);
+        }
+
+        cin &gt;&gt; p;
+        auto num = vector&lt;vector&lt;int&gt;&gt;(p);
+        for (int i = 0; i &lt; p; i++) {
+            num[i] = vector&lt;int&gt;(2);
+            cin &gt;&gt; num[i][0] &gt;&gt; num[i][1];
+        }
+
+        for (int i = 0; i &lt; p; i++) {
+            ret = u.isConnect(num[i][0], num[i][1]);
+            if (!ret) cout &lt;&lt; &quot;false&quot; &lt;&lt; endl;
+            else      cout &lt;&lt; &quot;true&quot; &lt;&lt; endl;
+        }
+    }
+};
+
+int main() {
+    Solution::run();
+    return 0;
+}
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/3tnyjqejK/">
+            <span class="flex-auto">C++</span>
+          </a>
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/6HdDBrZRQ/">
+            <span class="flex-auto">Algorithms</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/hsq3C-u7T/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  Data Stucture Report: Calculating Expression
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/a0NaW1Q9e/">
+                <h3 class="post-title">
+                  Fix &#34;UnicodeEncodeError&#34; When Running gef on Ubuntu20.04
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

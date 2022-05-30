@@ -1,0 +1,583 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#sequential-list">Sequential List</a></li>
+<li><a href="#link-list">Link List</a></li>
+<li><a href="#queue">Queue</a></li>
+<li><a href="#stack">Stack</a></li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Data Structure in C</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2022-03-16 / 7 min read
+        </div>
+        
+        <div class="post-content yue">
+          <h1 id="sequential-list">Sequential List</h1>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define DATA_TYPE int
+
+// Definition.
+typedef struct Vector {
+	DATA_TYPE *data;
+	int size, length;
+} Vector;
+
+// Construct a vector whose size is n.
+Vector *init(int n) {
+	Vector *vec = (Vector *)malloc(sizeof(Vector));
+	vec-&gt;data = (int *)malloc(sizeof(DATA_TYPE) * n);
+	vec-&gt;size = n;
+	vec-&gt;length = 0;
+	return vec;
+}
+
+// Destruct a vector.
+void clear(Vector *vec) {
+	if (vec == NULL) return;
+	free(vec-&gt;data);
+	free(vec);
+}
+
+// Expand a vector.
+// return 0: expand failure.
+// return 1: expand success.
+int expand(Vector *vec) {
+	// Secure Ways to use realloc, avoid memory leaking.
+	int new_size = vec-&gt;size * 2;
+	DATA_TYPE *p = (DATA_TYPE *)realloc(vec-&gt;data, sizeof(vec-&gt;data) * new_size);
+	if (p == NULL) return 0;
+	vec-&gt;size = new_size;
+	vec-&gt;data = p;
+	return 1;
+}
+
+// Insert an item into vector.
+// return 0: insert failure.
+// return 1: insert success.
+int insert(Vector *vec, int pos, DATA_TYPE val) {
+	// 3 illegal inserting cases.
+	if (vec == NULL) return 0;
+	if (vec-&gt;length == vec-&gt;size) {
+		if (!expand(vec)) return 0;
+		printf(&quot;expand vector size to %d success\n&quot;, vec-&gt;size);
+	}
+	if (pos &lt; 0 || pos &gt; vec-&gt;length) return 0;
+
+	for (int i = vec-&gt;length; i &gt; pos; --i) {
+		vec-&gt;data[i] = vec-&gt;data[i-1];
+	}
+	vec-&gt;data[pos] = val;
+	vec-&gt;length += 1;
+	return 1;
+}
+
+// Delete an item in vector.
+// return 0: delete failure.
+// return 1: delete success.
+int del(Vector *vec, int pos) {
+	// 3 illegal deleting cases.
+	if (vec == NULL) return 0;
+	if (vec-&gt;length == 0) return 0;
+	if (pos &lt; 0 || pos &gt; vec-&gt;length-1) return 0;
+
+	for (int i = pos; i &lt; vec-&gt;length-1; ++i) {
+		vec-&gt;data[i] = vec-&gt;data[i+1];
+	}
+	vec-&gt;length -= 1;
+	return 1;
+}
+
+// Print out a vector.
+void print(Vector *vec) {
+	printf(&quot;Vector(%d) = [&quot;, vec-&gt;length);
+	for (int i = 0; i &lt; vec-&gt;length; ++i) {
+		if (i != 0) printf(&quot;, &quot;);
+		printf(&quot;%d&quot;, vec-&gt;data[i]);
+	}
+	printf(&quot;]\n&quot;);
+}
+</code></pre>
+<h1 id="link-list">Link List</h1>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define DATA_TYPE int
+
+// Define data structure: link list node.
+typedef struct ListNode
+{
+    DATA_TYPE data;
+    struct ListNode *next;
+} ListNode;
+
+// Define data structure: link list.
+typedef struct LinkList
+{
+    ListNode head;
+    int length;
+} LinkList;
+
+// Initialize a link list node, returning a pointer to list node.
+ListNode *init_listnode(DATA_TYPE val)
+{
+    ListNode *p = (ListNode *)malloc(sizeof(ListNode));
+    if (p == NULL)
+        return NULL;
+    p-&gt;data = val;
+    p-&gt;next = NULL;
+    return p;
+}
+
+// Initialize a link list, returnning a link list.
+LinkList *init_linklist()
+{
+    LinkList *l = (LinkList *)malloc(sizeof(LinkList));
+    if (l == NULL)
+        return NULL;
+    l-&gt;head.next = NULL;
+    l-&gt;length = 0;
+    return l;
+}
+
+// Destruct link list node.
+void clear_listnode(ListNode *p)
+{
+    if (p == NULL)
+        return;
+    free(p);
+    return;
+}
+
+// Destruct link list.
+void clear_linklist(LinkList *l)
+{
+    if (l == NULL)
+        return;
+    ListNode *p = l-&gt;head.next, *q;
+    while (p)
+    {
+        q = p-&gt;next;
+        clear_listnode(p);
+        p = q;
+    }
+    free(l);
+    return;
+}
+
+// Insert a link list node.
+// return 0, inserting fail.
+// return 1, inserting success.
+int insert(LinkList *l, int ind, DATA_TYPE val)
+{
+    if (l == NULL)
+        return 0;
+    if (ind &lt; 0 || ind &gt; l-&gt;length)
+        return 0;
+    ListNode *p = &amp;(l-&gt;head), *node = init_listnode(val);
+    while (ind--)
+        p = p-&gt;next;
+
+    node-&gt;next = p-&gt;next;
+    p-&gt;next = node;
+    l-&gt;length += 1;
+    return 1;
+}
+
+// Erase a link list node.
+// return 0, erasing fail.
+// return 1, erasing success.
+int erase(LinkList *l, int ind)
+{
+    if (l == NULL)
+        return 0;
+    if (ind &lt; 0 || ind &gt; l-&gt;length - 1)
+        return 0;
+    ListNode *p = &amp;(l-&gt;head), *q;
+    while (ind--)
+        p = p-&gt;next;
+
+    q = p-&gt;next;
+    p-&gt;next = p-&gt;next-&gt;next;
+    clear_listnode(q);
+    l-&gt;length -= 1;
+    return 1;
+}
+
+// Print out link list.
+void output(LinkList *l)
+{
+    printf(&quot;LinkList(%d): &quot;, l-&gt;length);
+    for (ListNode *p = l-&gt;head.next; p; p = p-&gt;next)
+        printf(&quot;%d -&gt; &quot;, p-&gt;data);
+    printf(&quot;NULL\n&quot;);
+    return;
+}
+</code></pre>
+<h1 id="queue">Queue</h1>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define DATA_TYPE int
+
+typedef struct Queue
+{
+    DATA_TYPE *data;
+    int head, tail;
+    int size, len;
+} Queue;
+
+Queue *init(int n) {
+    Queue * que = (Queue *)malloc(sizeof(Queue));
+    que-&gt;data = (DATA_TYPE *)malloc(sizeof(int) * n);
+    que-&gt;len = que-&gt;head = que-&gt;tail = 0;
+    que-&gt;size = n;
+    return que;
+}
+
+void clear(Queue *que) {
+    if (que == NULL) return;
+    free(que-&gt;data);
+    free(que);
+    return;
+}
+
+int empty(Queue *que) {
+    return que-&gt;len == 0;
+}
+
+DATA_TYPE front(Queue *que) {
+    return que-&gt;data[que-&gt;head];
+}
+
+int push(Queue *que, DATA_TYPE val) {
+    if (que == NULL) return 0;
+    if (que-&gt;len == que-&gt;size) return 0;
+    que-&gt;data[que-&gt;tail++] = val;
+    que-&gt;tail %= que-&gt;size;
+    que-&gt;len++;
+    return 1;
+}
+
+int pop(Queue *que) {
+    if (que == NULL) return 0;
+    if (empty(que)) return 0;
+    que-&gt;head %= (que-&gt;head + 1);
+    que-&gt;len--;
+    return 1;
+}
+
+void output(Queue *que) {
+    printf(&quot;queue = [&quot;);
+    for (int head = que-&gt;head, i = 0; i &lt; que-&gt;len; ++i) {
+        int ind = (head + i) % que-&gt;size;
+        printf(&quot;%d&quot;, que-&gt;data[ind]);
+        if (ind != que-&gt;tail-1) printf(&quot;, &quot;);
+        else printf(&quot;]\n&quot;);
+    }
+}
+</code></pre>
+<h1 id="stack">Stack</h1>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define DATA_TYPE int
+
+typedef struct Stack {
+    DATA_TYPE *data;
+    int top, size;
+} Stack;
+
+Stack *init(int n) {
+    Stack *sta = (Stack *)malloc(sizeof(Stack));
+    sta-&gt;data = (DATA_TYPE *)malloc(sizeof(DATA_TYPE) * n);
+    sta-&gt;size = n;
+    sta-&gt;top = -1;
+    return sta;
+}
+
+void clear(Stack *sta) {
+    if (sta == NULL) return;
+    free(sta-&gt;data);
+    free(sta);
+    return;
+}
+
+int empty(Stack *sta) {
+    if (sta == NULL) return NULL;
+    return sta-&gt;top == -1;
+}
+
+int top(Stack *sta) {
+    if (sta == NULL) return NULL;
+    if (empty(sta)) return NULL;
+    return sta-&gt;data[sta-&gt;top];
+}
+
+int push(Stack *sta, DATA_TYPE val) {
+    if (sta == NULL) return 0;
+    if (sta-&gt;top == sta-&gt;size - 1) return 0;
+    sta-&gt;data[++sta-&gt;top] = val;
+    return 1;
+}
+
+int pop(Stack *sta) {
+    if (sta == NULL) return 0;
+    if (empty(sta)) return 0;
+    sta-&gt;top--;
+    return 1;
+}
+
+void output(Stack *sta) {
+    printf(&quot;stack(%d) = [&quot;, sta-&gt;top + 1);
+    for (int i = 0; i &lt; sta-&gt;top + 1; i++) {
+        printf(&quot;%d&quot;, sta-&gt;data[i]);
+        if (i != sta-&gt;top) printf(&quot;, &quot;);
+        else printf(&quot;]&quot;);
+    }
+}
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/1UtwLPxq0/">
+            <span class="flex-auto">Data Structure</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/SIPZQTxzc/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  NKUCS OJ Problems: 	Advanced Language Programming
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/JEOBoEHyt/">
+                <h3 class="post-title">
+                  Challenge 2. orw (pwnable.tw)
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

